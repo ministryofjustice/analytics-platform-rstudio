@@ -115,9 +115,6 @@ RUN R -e "install.packages(c(\
   && mv /root/bin/phantomjs /usr/bin/phantomjs \
   && chmod a+rx /usr/bin/phantomjs
 
-# Test
-RUN touch /test
-
 # Configure git
 RUN git config --system credential.helper 'cache --timeout=3600' \
   && git config --system push.default simple
