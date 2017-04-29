@@ -40,10 +40,10 @@ RUN apt-get update \
     liblzma-dev \
     libicu-dev \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/ \
+  && rm -rf /var/lib/apt/lists/
 
-  # Install RStudio
-  && wget -q https://download2.rstudio.org/rstudio-server-pro-1.0.136-amd64.deb \
+# Install RStudio
+RUN wget -q https://download2.rstudio.org/rstudio-server-pro-1.0.136-amd64.deb \
   && dpkg -i rstudio-server-pro-1.0.136-amd64.deb \
   && rm rstudio-server-pro-*-amd64.deb \
 
@@ -74,14 +74,10 @@ RUN apt-get update \
     \n  options(httr_oob_default = TRUE) \
     \n}' >> /usr/local/lib/R/etc/Rprofile.site \
   && echo "PATH=\"${PATH}\"" >> /usr/local/lib/R/etc/Renviron \
-  && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf \
+  && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf
 
-  # Configure git
-  && git config --system credential.helper 'cache --timeout=3600' \
-  && git config --system push.default simple \
-
-  # Install R Packages
-  && R -e "install.packages(c(\
+# Install R Packages
+RUN R -e "install.packages(c(\
     'httr', \
     'xml2', \
     'base64enc', \
@@ -118,6 +114,13 @@ RUN apt-get update \
   && R -e "webshot::install_phantomjs()" \
   && mv /root/bin/phantomjs /usr/bin/phantomjs \
   && chmod a+rx /usr/bin/phantomjs
+
+# Test
+RUN touch /test
+
+# Configure git
+RUN git config --system credential.helper 'cache --timeout=3600' \
+  && git config --system push.default simple
 
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
