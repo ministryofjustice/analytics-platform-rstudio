@@ -53,7 +53,6 @@ RUN wget -q https://download2.rstudio.org/rstudio-server-pro-1.0.143-amd64.deb \
   \nserver-project-sharing=0 \
   \nserver-health-check-enabled=1 \
   \nauth-proxy=1 \
-  \nmax-memory-mb=6144 \
   \n' >> /etc/rstudio/rserver.conf \
 
   # Install pandoc
@@ -75,7 +74,13 @@ RUN wget -q https://download2.rstudio.org/rstudio-server-pro-1.0.143-amd64.deb \
     \n  options(httr_oob_default = TRUE) \
     \n}' >> /usr/local/lib/R/etc/Rprofile.site \
   && echo "PATH=\"${PATH}\"" >> /usr/local/lib/R/etc/Renviron \
-  && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf
+  && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf \
+
+  ## Configure RStudio profile
+  && echo '\n\
+  \n[*] \
+  \nmax-memory-mb = 6144 \
+  \n' >> /etc/rstudio/profiles
 
 # Install R Packages
 RUN R -e "install.packages(c(\
