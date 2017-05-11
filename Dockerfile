@@ -53,6 +53,7 @@ RUN wget -q https://download2.rstudio.org/rstudio-server-pro-1.0.143-amd64.deb \
   \nserver-project-sharing=0 \
   \nserver-health-check-enabled=1 \
   \nauth-proxy=1 \
+  \nmax-memory-mb=6144 \
   \n' >> /etc/rstudio/rserver.conf \
 
   # Install pandoc
