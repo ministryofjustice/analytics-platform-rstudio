@@ -39,6 +39,7 @@ RUN apt-get update \
     libpcre3-dev \
     liblzma-dev \
     libicu-dev \
+    libpng-dev \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/
 
@@ -108,7 +109,8 @@ RUN R -e "install.packages(c(\
     'rprojroot', \
     'rmarkdown', \
     'readr', \
-    'shiny' \
+    'shiny', \
+    'tidyverse' \
     ))" \
 
   # Install R S3 package
