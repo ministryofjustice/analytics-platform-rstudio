@@ -1,16 +1,6 @@
-FROM debian:stretch
+FROM rocker/rstudio-stable:3.4.2
 
 ENV USER=rstudio
-
-ARG PANDOC_TEMPLATES_VERSION
-ARG BUILD_DATE
-ENV PANDOC_TEMPLATES_VERSION ${PANDOC_TEMPLATES_VERSION:-1.18}
-ENV TERM=xterm \
-    DEBIAN_FRONTEND=noninteractive \
-    PATH=/usr/lib/rstudio-server/bin:$PATH
-
-# Select Debian mirror
-RUN sed -i 's%deb.debian.org%mirror.bytemark.co.uk%' /etc/apt/sources.list
 
 # Set locale
 RUN apt-get update \
@@ -22,115 +12,31 @@ RUN apt-get update \
 ENV LC_ALL=en_GB.UTF-8 \
     LANG=en_GB.UTF-8
 
-# Install R Dependencies
-RUN apt-get update \
-  && apt-get install -y software-properties-common apt-transport-https gnupg \
-  && add-apt-repository 'deb https://cran.ma.imperial.ac.uk/bin/linux/debian stretch-cran34/' \
-  && apt-key adv --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
-  && apt-get update \
-  && apt-get install -y \
-    r-base \
-    r-base-dev \
-    r-recommended \
-    libopenblas-base \
-    curl \
-    wget
 
-  ## Add a default CRAN mirror
-RUN echo "options(repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl')" >> /etc/R/Rprofile.site \
-  ## Add a library directory (for user-installed packages)
-  && mkdir -p /usr/local/lib/R/site-library \
-  && chown root:staff /usr/local/lib/R/site-library \
-  && chmod g+wx /usr/local/lib/R/site-library \
-  ## Fix library path
-  && echo "R_LIBS_USER='/usr/local/lib/R/site-library'" >> /etc/R/Renviron \
-  && echo "R_LIBS=\${R_LIBS-'/usr/local/lib/R/site-library:/usr/local/lib/R/library:/usr/lib/R/library'}" >> /etc/R/Renviron \
-  ## install packages from date-locked MRAN snapshot of CRAN
-  && [ -z "$BUILD_DATE" ] && BUILD_DATE=$(TZ="America/Los_Angeles" date -I) || true \
-  && MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
-  && echo MRAN=$MRAN >> /etc/environment \
-  && export MRAN=$MRAN \
-  ## MRAN becomes default only in versioned images
-  ## Use littler installation scripts
-  && Rscript -e "install.packages(c('littler', 'docopt'), repo = '$MRAN')" \
-  && ln -s /usr/local/lib/R/site-library/littler/examples/install2.r /usr/local/bin/install2.r \
-  && ln -s /usr/local/lib/R/site-library/littler/examples/installGithub.r /usr/local/bin/installGithub.r \
-  && ln -s /usr/local/lib/R/site-library/littler/bin/r /usr/local/bin/r \
-  ## TEMPORARY WORKAROUND to get more robust error handling for install2.r prior to littler update
-  && curl -O /usr/local/bin/install2.r https://github.com/eddelbuettel/littler/raw/master/inst/examples/install2.r \
-  && chmod +x /usr/local/bin/install2.r \
-  && rm -rf /var/lib/apt/lists/*
-
-## Download and install RStudio server & dependencies
-## Attempts to get detect latest version, otherwise falls back to version given in $VER
-## Symlink pandoc, pandoc-citeproc so they are available system-wide
+# apt-get in our current dockerfile which are not in rocker/rstudio
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-    git \
-    libapparmor1 \
-    libcurl4-openssl-dev \
-    libedit2 \
-    libssl-dev \
-    lsb-release \
-    psmisc \
-    python-setuptools \
-    sudo \
-    rrdtool \
-    openssh-client \
-    libxml2-dev \
-    texinfo \
-    texlive \
-    texlive-latex-extra \
-    default-jre \
-    default-jdk \
-    bzip2 \
-    libbz2-dev \
-    libpcre3-dev \
-    liblzma-dev \
-    libglpk-dev \
-    libicu-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libpoppler-cpp-dev \
-    libgeos-dev \
-    libgdal-dev \
-    libproj-dev \
-    libcairo2-dev \
-    lmodern \
-  && rm -rf /var/lib/apt/lists/* \
+  bzip2 \
+  default-jre \
+  libgdal-dev \
+  libgeos-dev \
+  libglpk-dev \
+  libpoppler-cpp-dev \
+  libproj-dev \
+  libxml2-dev \
+  lmodern \
+  openssh-client \
+  rrdtool \
+  texlive \
+  texlive-latex-extra \
+  && rm -rf /var/lib/apt/lists/* \ 
   && wget -O libssl1.0.0.deb http://ftp.debian.org/debian/pool/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb \
-  && dpkg -i libssl1.0.0.deb \
+  && dpkg -i libssl1.0.0.deb \  
   && rm libssl1.0.0.deb
 
-# Install RStudio
-RUN wget -q https://download2.rstudio.org/rstudio-server-1.0.143-amd64.deb \
-  && dpkg -i rstudio-server-1.0.143-amd64.deb \
-  && rm rstudio-server-*-amd64.deb \
-
-  # Install pandoc
-  && ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc /usr/local/bin \
-  && ln -s /usr/lib/rstudio-server/bin/pandoc/pandoc-citeproc /usr/local/bin \
-  && wget https://github.com/jgm/pandoc-templates/archive/${PANDOC_TEMPLATES_VERSION}.tar.gz \
-  && mkdir -p /opt/pandoc/templates && tar zxf ${PANDOC_TEMPLATES_VERSION}.tar.gz \
-  && cp -r pandoc-templates*/* /opt/pandoc/templates && rm -rf pandoc-templates* \
-  && mkdir /root/.pandoc && ln -s /opt/pandoc/templates /root/.pandoc/templates \
-
-  ## Configure R
-  && mkdir -p /etc/R \
-  && echo '\n\
-    \n .libPaths("~/R/library") \
-    \n# Configure httr to perform out-of-band authentication if HTTR_LOCALHOST \
-    \n# is not set since a redirect to localhost may not work depending upon \
-    \n# where this Docker container is running. \
-    \nif(is.na(Sys.getenv("HTTR_LOCALHOST", unset=NA))) { \
-    \n  options(httr_oob_default = TRUE) \
-    \n}' >> /etc/R/Rprofile.site \
-  && echo "PATH=\"${PATH}\"" >> /etc/R/Renviron \
-  && echo "r-libs-user=~/R/library" >> /etc/rstudio/rsession.conf \
-
-  ## Configure RStudio profile
-  && echo '\n\
-  \n[*] \
+# Configure R Studio to max out at 12 Gb of memory
+echo '\n\ 
+  \n[*] \ 
   \nmax-memory-mb = 12288 \
   \n' >> /etc/rstudio/profiles
 
@@ -180,10 +86,6 @@ RUN R -e "install.packages(c(\
   && R -e "webshot::install_phantomjs()" \
   && mv /root/bin/phantomjs /usr/bin/phantomjs \
   && chmod a+rx /usr/bin/phantomjs
-
-# Configure git
-RUN git config --system credential.helper 'cache --timeout=3600' \
-  && git config --system push.default simple
 
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
