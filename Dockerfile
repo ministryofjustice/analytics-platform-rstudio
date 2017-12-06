@@ -35,7 +35,7 @@ RUN apt-get update \
   && rm libssl1.0.0.deb
 
 # Configure R Studio to max out at 12 Gb of memory
-echo '\n\ 
+RUN echo '\n\ 
   \n[*] \ 
   \nmax-memory-mb = 12288 \
   \n' >> /etc/rstudio/profiles
