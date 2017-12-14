@@ -16,13 +16,15 @@ RUN apt-get update \
 ENV LC_ALL=en_GB.UTF-8 \
     LANG=en_GB.UTF-8
 
-
+libbz2-dev libpcre3-dev
 # apt-get in our current dockerfile which are not in rocker/rstudio
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   bzip2 \
   default-jre \
   default-jdk \
+  libbz2-dev \
+  libpcre3-dev \
   libgdal-dev \
   libgeos-dev \
   libglpk-dev \
