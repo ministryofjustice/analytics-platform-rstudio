@@ -2,6 +2,10 @@ FROM rocker/rstudio-stable:3.4.2
 
 ENV USER=rstudio
 
+# Select Debian mirror.  
+# This is needed because e.g. default-jdk doesn't seem to be available through the default mirror
+RUN sed -i 's%deb.debian.org%mirror.bytemark.co.uk%' /etc/apt/sources.list
+
 # Set locale
 RUN apt-get update \
   && apt-get install -y --no-install-recommends locales \
