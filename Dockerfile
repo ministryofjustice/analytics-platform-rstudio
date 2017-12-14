@@ -18,6 +18,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   bzip2 \
   default-jre \
+  default-jdk \
   libgdal-dev \
   libgeos-dev \
   libglpk-dev \
