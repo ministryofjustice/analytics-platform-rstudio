@@ -60,6 +60,9 @@ RUN npm config set unsafe-perm true \
     && npm install -g vega vega-lite \
     && pip install altair
 
+# This allows users to interact with AWS using boto3 via reticulate
+RUN pip install boto3
+
 # Install R Packages
 RUN R -e "source('https://bioconductor.org/biocLite.R')" \
     && install2.r --error \
