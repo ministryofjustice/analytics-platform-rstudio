@@ -57,6 +57,9 @@ RUN npm config set unsafe-perm true \
     && npm install -g vega vega-lite \
     && pip install altair
 
+# Install etl_manager - will allow users to use our data engineering tools in R 
+RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@1.0.1#egg=etl_manager
+
 # Install R Packages
 RUN R -e "source('https://bioconductor.org/biocLite.R')" \
     && install2.r --error \
