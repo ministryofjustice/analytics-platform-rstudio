@@ -44,9 +44,9 @@ RUN apt-get -qq update && apt-get -qq install -y \
     rm -r /install-tl-unx; \
 	rm install-tl-unx.tar.gz; \
 	# Install SimbaAthena ODBC drivers
-	wget -q https://s3.amazonaws.com/athena-downloads/drivers/ODBC/Linux/simbaathena-1.0.2.1003-1.x86_64.rpm -P /tmp \
-	&& alien -i /tmp/simbaathena-1.0.2.1003-1.x86_64.rpm \
-	&& rm -f /tmp/simbaathena-1.0.2.1003-1.x86_64.rpm
+	wget -q https://s3.amazonaws.com/athena-downloads/drivers/ODBC/SimbaAthenaODBC_1.0.3/Linux/simbaathena-1.0.3.1004-1.x86_64.rpm -P /tmp \
+	&& alien -i /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm \
+	&& rm -f /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm
 
 # Need vega and vega lite npm packages to render high res vega charts
 RUN sudo curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash \
@@ -59,6 +59,9 @@ RUN npm config set unsafe-perm true \
 
 # This allows users to interact with AWS using boto3 via reticulate
 RUN pip install boto3
+
+# Install etl_manager to allow analysts declare databases on athena via R (using reticulate)
+RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.2#egg=etl_manager
 
 # Install R Packages
 RUN R -e "source('https://bioconductor.org/biocLite.R')" \
