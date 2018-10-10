@@ -51,6 +51,12 @@ RUN apt-get -qq update && apt-get -qq install -y \
 # Users want nano when they git commit not vim
 RUN update-alternatives --set editor /bin/nano
 
+# Users will use the reticulate package within R to run Python code.  This makes sure we always use py3
+RUN apt-get update
+RUN apt-get install -y python3 python3-pip
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2
+
+
 # Need vega and vega lite npm packages to render high res vega charts
 RUN sudo curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash \
     && apt-get install -y nodejs npm
@@ -64,7 +70,7 @@ RUN npm config set unsafe-perm true \
 RUN pip install boto3
 
 # Install etl_manager to allow analysts declare databases on athena via R (using reticulate)
-RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.2#egg=etl_manager
+RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.4#egg=etl_manager
 
 # Install R Packages
 RUN R -e "source('https://bioconductor.org/biocLite.R')" \
@@ -94,9 +100,11 @@ RUN git config --system credential.helper 'cache --timeout=3600' \
 # Adds Athena ODBC driver configuration
 COPY files/odbc* /etc/
 
-COPY start.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start.sh
+
+
+# COPY start.sh /usr/local/bin/
+# RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 8787
 
-CMD ["/usr/local/bin/start.sh"]
+# CMD ["/usr/local/bin/start.sh"]
