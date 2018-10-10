@@ -112,9 +112,9 @@ COPY files/odbc* /etc/
 
 
 
-# COPY start.sh /usr/local/bin/
-# RUN chmod +x /usr/local/bin/start.sh
+COPY start.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 8787
 
-# CMD ["/usr/local/bin/start.sh"]
+CMD ["/usr/local/bin/start.sh"]
