@@ -53,8 +53,9 @@ RUN update-alternatives --set editor /bin/nano
 
 # Users will use the reticulate package within R to run Python code.  This makes sure we always use py3
 RUN apt-get update
-RUN apt-get install -y python3 python3-pip
+RUN apt-get install -y python3-pip
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 2
+
 
 
 # Need vega and vega lite npm packages to render high res vega charts
@@ -68,6 +69,12 @@ RUN npm config set unsafe-perm true \
 
 # This allows users to interact with AWS using boto3 via reticulate
 RUN pip install boto3
+
+# Need the latest version of reticulate and altair which aren't yet on CRAm
+# Install R S3 package
+RUN R -e "devtools::install_github('rstudio/reticulate')" \
+    && R -e "devtools::install_github('vegawidget/altair')"
+
 
 # Install etl_manager to allow analysts declare databases on athena via R (using reticulate)
 RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.4#egg=etl_manager
@@ -92,6 +99,8 @@ RUN install2.r --error \
     && R -e "webshot::install_phantomjs()" \
     && mv /root/bin/phantomjs /usr/bin/phantomjs \
     && chmod a+rx /usr/bin/phantomjs
+
+
 
 # Configure git
 RUN git config --system credential.helper 'cache --timeout=3600' \
