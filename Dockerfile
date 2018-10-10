@@ -78,7 +78,7 @@ RUN R -e "devtools::install_github('rstudio/reticulate')" \
 
 # Install etl_manager to allow analysts declare databases on athena via R (using reticulate)
 RUN pip install git+git://github.com/moj-analytical-services/etl_manager.git@v1.0.4#egg=etl_manager
-RUN pip install git+git://github.com/moj-analytical-services/dbtools.git@v0.0.1#egg=etl_manager
+
 
 # Install R Packages
 RUN R -e "source('https://bioconductor.org/biocLite.R')" \
@@ -95,6 +95,7 @@ RUN install2.r --error \
     # Install MOJ S3tools package
     && R -e "devtools::install_github('moj-analytical-services/s3tools')" \
     && R -e "devtools::install_github('moj-analytical-services/s3browser')" \
+    && R -e "devtools::install_github('moj-analytical-services/dbtools')" \
     # Install webshot (dependency => PhantomJS) for Doc/PDF with JS graphs in it
     && R -e "install.packages('webshot')" \
     && R -e "webshot::install_phantomjs()" \
