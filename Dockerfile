@@ -1,4 +1,4 @@
-FROM rocker/verse:3.5.3@sha256:7cf4253239c338fbef924ddf46b7632cc52d1da7616e3d80b11bca0093071cb2
+FROM rocker/verse:3.6.0@sha256:2f63603e57a367e9ece9191cf5a4d8e46b418bca7bcf33862b19c083f5467bfb
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 ARG GITHUB_PAT
