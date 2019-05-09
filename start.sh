@@ -78,6 +78,9 @@ export R_HOME=$CONDA_PREFIX/lib/R
   && touch "$R_HOME/etc/Renviron" \
   && chown "$USER" "$R_HOME/etc/Renviron"
 
+grep -q -F "USER" "$R_HOME/etc/Renviron" \
+  && sed -i "s|USER=.*|USER=\"${USER}\"|" "$R_HOME/etc/Renviron" \
+  || echo "USER=\"${USER}\"" >> "$R_HOME/etc/Renviron"
 
 grep -q -F "PATH" "$R_HOME/etc/Renviron" \
   && sed -i "s|PATH=.*|PATH=\"${PATH}\"|" "$R_HOME/etc/Renviron" \
@@ -95,7 +98,8 @@ grep -q -F "PKG_CONFIG_PATH" "$R_HOME/etc/Renviron" \
 sudo -i -u "${USER}" /usr/lib/rstudio-server/bin/rserver \
   --server-daemonize=0 \
   --rsession-ld-library-path="/usr/lib/rstudio-server:/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
-  --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R"
+  --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R" \
+  --auth-none=1
 }
 function main() {
   init_user
