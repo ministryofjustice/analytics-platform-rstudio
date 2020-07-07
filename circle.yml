@@ -1,8 +1,0 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: busybox
-    steps:
-      - checkout
-      - run: echo "tested"
