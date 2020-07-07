@@ -4,30 +4,39 @@ RStudio Docker image for Analytics Platform. Used by [RStudio helm chart](https:
 
 [![Docker Repository on Quay](https://quay.io/repository/mojanalytics/rstudio/status "Docker Repository on Quay")](https://quay.io/repository/mojanalytics/rstudio)
 
+## Builds
+
+The docker image is built and hosted on [Quay.io](https://quay.io/repository/mojanalytics/rstudio)
+
 ## Usage
 
-To add/remove R packages to this image? Edit the `R_packages` file accordingly then build the image remembering to 
+To add/remove R packages to this image, edit the `R_packages` file accordingly then build the image remembering to
 update the tag
 
 #### Build
+
 ```
 docker image build --no-cache -t quay.io/mojanalytics/rstudio .
 ```
 
-#### Run locally 
+#### Run locally
+
 ```
 docker container run -d --rm -p 8787:8787 quay.io/mojanalytics/rstudio
 ```
 
 #### Tag/Push
+
 When satisfied Tag and push the image
 
 Tag
+
 ```
 docker image tag quay.io/mojanalytics/rstudio quay.io/mojanalytics/rstudio:<x.x.x>
 ```
 
-Push 
+Push
+
 ```
 docker image push quay.io/mojanalytics/rstudio:<x.x.x>
 ```
