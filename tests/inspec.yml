@@ -1,0 +1,9 @@
+---
+name: Datascience Notebook
+title: Datascience Notebook
+maintainer: Analytical Platform
+copyright: Copyright (c) 2020 Crown Copyright (Ministry of Justice)
+copyright_email: "analytics-platform-tech@digital.justice.gov.uk"
+license: MIT
+summary: An InSpec Compliance Profile for Analytical Platform Jupyter Datascience Notebook
+version: 0.1.0
