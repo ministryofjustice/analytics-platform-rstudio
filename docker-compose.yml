@@ -3,13 +3,12 @@ version: "3.7"
 
 services:
   test:
-    image: quay.io/mojanalytics/rstudio:1.2.1335-r3.5.1-python3.7.1-conda-10
+    image: quay.io/mojanalytics/rstudio:${BUILD_TAG:-latest}
     ports: [8787:8787]
   inspec:
     image: chef/inspec:current
     environment:
       - CHEF_LICENSE=accept-no-persist
-    # entrypoint: "/bin/sh"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./tests:/share/tests
