@@ -1,5 +1,5 @@
 SHELL = '/bin/bash'
-export BUILD_TAG ?= 1.2.1335-r3.5.1-python3.7.1-conda-10
+export BUILD_TAG ?= local
 export DOCKER_BUILDKIT=1
 export PROJECT_NAME=rstudio
 
@@ -7,8 +7,8 @@ export PROJECT_NAME=rstudio
 
 pull:
 	docker-compose pull test
-build: pull
-	# docker build -t quay.io/mojanalytics/${PROJECT_NAME}:${BUILD_TAG} .
+build:
+	docker build -t quay.io/mojanalytics/${PROJECT_NAME}:${BUILD_TAG} .
 
 test:
 	docker-compose down

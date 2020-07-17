@@ -1,5 +1,5 @@
 ---
-name: Datascience Build & Test
+name: RStudio Build & Test
 
 "on":
   pull_request:
