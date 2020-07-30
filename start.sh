@@ -1,115 +1,104 @@
 #!/usr/bin/env bash
 set -ex
 
-GROUP=staff
-USER_UID=1001
-export HOME="/home/$USER"
+USER="rstudio"
+USER_UID="1000"
+USER_HOME=$(getent passwd "${USER_UID:?}" | cut -d: -f6)
 
 function cleanup() {
- rm -rf "$HOME/.conda/envs/rstudio"
+  if [[ -d "${USER_HOME}/.conda/envs/rstudio" ]];then
+    rm -rf "${USER_HOME}/.conda/envs/rstudio"
+  fi
 }
+
 trap cleanup ERR
+source functions.sh
 
 function init_user() {
-  if [ "$(id -u "$USER" 2>/dev/null)" != $USER_UID ]; then
-      useradd -g $GROUP -u $USER_UID -d "/home/$USER" "$USER" || true
-  fi
-
-  # this is only for running locally - in-cluster, home directories are
-  # provided via NAS
-  echo "${USER}:${USER}" | chpasswd
-  if [ ! -d "/home/$USER" ]; then
-      mkdir -p "/home/$USER"
-      chown "${USER}:${GROUP}" -R "/home/$USER/"
-  fi
+  usermod -a -G "staff,users" "${USER}"
 }
 
 function init_conda() {
   ## if user has ~/.bashrc make sure conda is added to that
-
   CONDA_SNIPPET='[[ -f /opt/conda/etc/profile.d/conda.sh ]] && . /opt/conda/etc/profile.d/conda.sh'
   CONDA_ENV_ACTIVATE='[[ -v RSTUDIO ]] && conda activate rstudio'
 
-  grep -q -x -F "$CONDA_SNIPPET" "$HOME/.bashrc" || echo "$CONDA_SNIPPET" >> "$HOME/.bashrc"
-  grep -q -x -F "$CONDA_ENV_ACTIVATE" "$HOME/.bashrc" || echo "$CONDA_ENV_ACTIVATE" >> "$HOME/.bashrc"
+  append_to_file "${CONDA_SNIPPET}" "${USER_HOME}/.bashrc"
+  append_to_file  "${CONDA_ENV_ACTIVATE}" >> "${HOME}/.bashrc"
 
   # shellcheck disable=SC1091
-  . /opt/conda/etc/profile.d/conda.sh
-  conda_envs=$(conda env list)
-  if ! grep -q rstudio$ <<< "$conda_envs"; then
-    echo "no existing environment found"
-    conda create --use-index-cache --clone root -n rstudio --copy -y \
-    && chown -R "${USER}:${GROUP}" "/home/$USER/.conda/"
-    chmod -R 775 "/home/$USER/.conda/envs/rstudio/bin" \
-    && chmod -R 775 "/home/$USER/.conda/envs/rstudio/lib/R/bin"
+  source /opt/conda/etc/profile.d/conda.sh
+
+  if [[ $(conda env list | grep 'rstudio') != 0 ]]; then
+    echo "no existing Conda environment found, creating..."
+    fix_or_initialize_conda_home "${USER_HOME}"
+    conda create --use-index-cache --clone root -n rstudio --copy -y
   else
     echo "Conda Rstudio environment already exists"
   fi
-
 }
-
 
 function init_r() {
+  write_file "${SECURE_COOKIE_KEY:?}" '/var/lib/rstudio-server/secure-cookie-key'
+  chmod 600 /var/lib/rstudio-server/secure-cookie-key
 
-# set secure cookie key
-set +x
-echo -n "${SECURE_COOKIE_KEY}" > /var/lib/rstudio-server/secure-cookie-key
-set -x
-chmod 600 /var/lib/rstudio-server/secure-cookie-key
-
-echo '.libPaths(c("~/R/library", paste0(R.home(), "/library"), .libPaths() ))' >> /usr/local/lib/R/etc/Rprofile.site \
-    && echo "PATH=\"${PATH}\"" >> "$R_HOME/etc/Renviron" \
-    && echo "AWS_DEFAULT_REGION=eu-west-1" >> "$R_HOME/etc/Renviron"
+  append_to_file '.libPaths(c("~/R/library", paste0(R.home(), "/library"), .libPaths() ))' '/usr/local/lib/R/etc/Rprofile.site'
+  append_to_file "PATH=\"${PATH}\"" "${R_HOME:?}/etc/Renviron"
+  append_to_file 'AWS_DEFAULT_REGION=eu-west-1' "${R_HOME:?}/etc/Renviron"
 }
-
-
-
 
 function start() {
-RSTUDIO_ENV_PATH=$(conda info --env | grep -v \# | grep rstudio | tr -s " " | cut -f2 -d' ' | head -n1)
+  local RSTUDIO_ENV_PATH
+  local R_HOME
 
-# shellcheck disable=SC1091
-. /opt/conda/etc/profile.d/conda.sh
+  # Update Renviron because we're not under an activated conda environment (${R_HOME:?} is different)
+  RSTUDIO_ENV_PATH=$(conda info --env | grep -v \# | grep rstudio | tr -s " " | cut -f2 -d' ' | head -n1)
+  R_HOME=${CONDA_PREFIX:?}/lib/R
 
-conda activate rstudio
+  # shellcheck disable=SC1091
+  source /opt/conda/etc/profile.d/conda.sh
 
-export R_HOME=$CONDA_PREFIX/lib/R
-# Update Renviron because we're not under an activated conda environment ($R_HOME is different)
+  init_conda &&\
+  conda activate rstudio
 
-[[ ! -f $R_HOME/etc/Renviron ]] \
-  && touch "$R_HOME/etc/Renviron" \
-  && chown "$USER" "$R_HOME/etc/Renviron"
+  if [[ ! -f ${R_HOME:?}/etc/Renviron ]];then
+    touch "${R_HOME:?}/etc/Renviron"
+    chown "${USER}" "${R_HOME:?}/etc/Renviron"
+  fi
 
-# rstudio 1.2 uses `bash -l` instead of `bash` so we need to
-# link the conda activate stuff into bash_profile
-if [ ! -f ~/.bash_profile ]; then
-  ln -s ~/.bashrc ~/.bash_profile
-fi
+  # rstudio 1.2 uses `bash -l` instead of `bash` so we need to
+  # link the conda activate script into bash_profile
+  if [[ ! -f ~/.bash_profile ]]; then
+    ln -s ~/.bashrc ~/.bash_profile
+  fi
 
-grep -q -F "PATH" "$R_HOME/etc/Renviron" \
-  && sed -i "s|PATH=.*|PATH=\"${PATH}\"|" "$R_HOME/etc/Renviron" \
-  || echo "PATH=\"${PATH}\"" >> "$R_HOME/etc/Renviron"
+  if grep -F "PATH" "${R_HOME:?}/etc/Renviron";then
+    sed -i "s|PATH=.*|PATH=\"${PATH}\"|" "${R_HOME:?}/etc/Renviron"
+    append_to_file "PATH=\"${PATH}\"" "${R_HOME:?}/etc/Renviron"
+  fi
 
-grep -q -F "AWS_DEFAULT_REGION" "$R_HOME/etc/Renviron" \
-  && sed -i "s|AWS_DEFAULT_REGION=.*|AWS_DEFAULT_REGION=eu-west-1|" "$R_HOME/etc/Renviron" \
-  || echo "AWS_DEFAULT_REGION=eu-west-1" >> "$R_HOME/etc/Renviron"
+  if grep -F "AWS_DEFAULT_REGION" "${R_HOME:?}/etc/Renviron";then
+    sed -i "s|AWS_DEFAULT_REGION=.*|AWS_DEFAULT_REGION=eu-west-1|" "${R_HOME:?}/etc/Renviron"
+    append_to_file "AWS_DEFAULT_REGION=eu-west-1" "${R_HOME:?}/etc/Renviron"
+  fi
 
-# conda activate should be doing this but it doesn't 😭
-grep -q -F "PKG_CONFIG_PATH" "$R_HOME/etc/Renviron" \
-  && sed -i "s|PKG_CONFIG_PATH=.*|PKG_CONFIG_PATH=\"${CONDA_PREFIX}/lib/pkgconfig\"|" "$R_HOME/etc/Renviron" \
-  || echo "PKG_CONFIG_PATH=\"${CONDA_PREFIX}/lib/pkgconfig\"" >> "$R_HOME/etc/Renviron"
+  # conda activate should be doing this but it doesn't
+  # TODO check this is still the case
+  if grep -F "PKG_CONFIG_PATH" "${R_HOME:?}/etc/Renviron";then
+    sed -i "s|PKG_CONFIG_PATH=.*|PKG_CONFIG_PATH=\"${CONDA_PREFIX:?}/lib/pkgconfig\"|" "${R_HOME:?}/etc/Renviron" \
+    append_to_file "PKG_CONFIG_PATH=\"${CONDA_PREFIX:?}/lib/pkgconfig\"" "${R_HOME:?}/etc/Renviron"
+  fi
 
-sudo -i -u "${USER}" /usr/lib/rstudio-server/bin/rserver \
-  --server-daemonize=0 \
-  --rsession-ld-library-path="/usr/lib/rstudio-server:/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
-  --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R"
+  # TODO use native S6 overlay to drop permissions instead of sudo
+  # https://github.com/just-containers/s6-overlay#dropping-privileges
+  sudo -i -u "${USER}" /usr/lib/rstudio-server/bin/rserver \
+    --server-daemonize=0 \
+    --rsession-ld-library-path="/usr/lib/rstudio-server:/opt/conda/lib:$RSTUDIO_ENV_PATH/lib" \
+    --rsession-which-r="$RSTUDIO_ENV_PATH/bin/R"
 }
-
-
 
 function main() {
   init_user
-  init_conda
   init_r
   start
 }
