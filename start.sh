@@ -17,7 +17,6 @@ function init_user() {
 
   # this is only for running locally - in-cluster, home directories are
   # provided via NAS
-  echo "${USER}:${USER}" | chpasswd
   if [ ! -d "/home/$USER" ]; then
       mkdir -p "/home/$USER"
       chown "${USER}:${GROUP}" -R "/home/$USER/"
