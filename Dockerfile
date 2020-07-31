@@ -131,6 +131,8 @@ RUN echo "options(repos = c(CRAN=https://cran.rstudio.com), download.file.method
     && update-alternatives --set editor /bin/nano
 
 COPY start.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh \
+    && usermod -a -G "staff,users" "rstudio"
+
 EXPOSE 8787
 CMD ["/usr/local/bin/start.sh"]
