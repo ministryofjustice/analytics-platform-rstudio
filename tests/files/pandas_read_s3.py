@@ -1,3 +1,5 @@
 import pandas as pd
 
-pd.read_csv("s3://blah")
+csv = pd.read_csv("s3://inspec.test.docker.rstudio/test.csv")
+
+print(csv)

@@ -5,6 +5,7 @@ services:
   test:
     image: quay.io/mojanalytics/rstudio:${BUILD_TAG:-latest}
     ports: [8787:8787]
+    volumes: ["./tests/files:/tests"]
   inspec:
     image: chef/inspec:current
     environment:

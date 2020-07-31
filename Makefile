@@ -11,7 +11,6 @@ build:
 	docker build -t quay.io/mojanalytics/${PROJECT_NAME}:${BUILD_TAG} .
 
 test:
-	docker-compose --project-name ${PROJECT_NAME} down
 	docker-compose --project-name ${PROJECT_NAME} up -d
 	docker-compose run --rm inspec exec tests -t docker://rstudio_test_1
 
