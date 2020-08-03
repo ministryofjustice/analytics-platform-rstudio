@@ -1,7 +1,7 @@
 title 'Working Pip'
 
 control 'Pip available' do
-  impact 1
+  impact 'high'
   title 'Pip should be available to use'
   desc 'Pip is the preferred installer for python packages.'
   tag 'installer'

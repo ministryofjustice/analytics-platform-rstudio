@@ -1,7 +1,7 @@
 title 'Working Conda'
 
 control 'Conda available' do
-  impact 1
+  impact 'high'
   title 'Conda installer should be available to use'
   desc 'The Conda installer is not preferred, but is the only way to install some packages.'
   tag 'installer'
