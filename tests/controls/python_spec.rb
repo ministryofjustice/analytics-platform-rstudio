@@ -1,4 +1,17 @@
-title 'Python Libraries'
+title 'Python & Libraries'
+
+control 'Python version' do
+  impact 'high'
+  title 'Python should be a specific version'
+  desc 'Python should be a specific version'
+  tag 'python'
+  tag 'version'
+
+  describe command('python --version') do
+    its('stdout') { should match /Python 3.7.1/ }
+    its('exit_status') { should eq 0 }
+  end
+end
 
 control 'Pandas can read a CSV' do
   impact 'high'

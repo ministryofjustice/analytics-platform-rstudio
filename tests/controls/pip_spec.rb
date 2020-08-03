@@ -6,6 +6,7 @@ control 'Pip available' do
   desc 'Pip is the preferred installer for python packages.'
   tag 'installer'
   tag 'pip'
+  tag 'version'
 
   describe command('pip  --version') do
     its('exit_status') { should eq 0 }
