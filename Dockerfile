@@ -128,9 +128,12 @@ RUN mv /usr/local/lib/R/etc/Rprofile.site /usr/local/lib/R/etc/Rprofile2.site \
 RUN echo "options(repos = c(CRAN=https://cran.rstudio.com), download.file.method = libcurl)" >> /usr/local/lib/R/etc/Rprofile.site \
     && git config --system credential.helper cache --timeout=3600 \
     && git config --system push.default simple \
-    && update-alternatives --set editor /bin/nano
+    && update-alternatives --set editor /bin/nano \
+    && echo "auth-none=1" >> /etc/rstudio/rserver.conf
 
+EXPOSE 8787
+
+# Override the /init entrypoint and use our own start.sh script
 COPY start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
-EXPOSE 8787
 CMD ["/usr/local/bin/start.sh"]

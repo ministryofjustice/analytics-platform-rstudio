@@ -16,7 +16,7 @@ end
 control 'Pandas can read a CSV' do
   impact 'high'
   title 'Python Pandas is installed and can read a CSV'
-  desc 'Python Pandas is installed and can read a CSV'
+  desc 'Reading from a CSV is a common task'
   tag 'python'
 
   describe command('python /tests/pandas_read_csv.py') do
