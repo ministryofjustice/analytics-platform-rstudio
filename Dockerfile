@@ -130,6 +130,10 @@ RUN echo "options(repos = c(CRAN=https://cran.rstudio.com), download.file.method
     && git config --system push.default simple \
     && update-alternatives --set editor /bin/nano
 
+# RStudio config to disable authentication
+# This will only get read as part of the '/init' script when/if we switch to the S6 overlay scripts
+RUN echo "auth-none=1" >> "/etc/rstudio/rserver.conf"
+
 EXPOSE 8787
 
 # Override the /init entrypoint and use our own start.sh script
