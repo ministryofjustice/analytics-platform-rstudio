@@ -102,7 +102,6 @@ RUN conda config --system --set pip_interop_enabled True \
     cairo \
     pango \
     libjpeg-turbo \
-    nodejs \
     altair \
     libiconv \
     nbstripout
@@ -112,9 +111,6 @@ RUN ln -s /bin/tar /bin/gtar \
     && R -e "library(webshot); webshot::install_phantomjs()" \
     && mv /root/bin/phantomjs /usr/bin/phantomjs \
     && chmod a+rx /usr/bin/phantomjs
-
-RUN npm config set unsafe-perm true \
-    && npm install -g vega vega-lite
 
 # We want all packages to use the default MRAN mirror so that when we upgrade users, they don't magically get new packages
 # However, when they install their own packages, we want this to come from latest CRAN
