@@ -1,0 +1,24 @@
+---
+name: "rstudio-r3 build & test"
+
+"on":
+  pull_request:
+    paths: ["rstudio-r3/**"]
+  push:
+    branches: ["main"]
+    paths: ["rstudio-r3/**"]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./rstudio-r3
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: make build
+        working-directory: ${{env.working-directory}}
+      - name: Test
+        run: make test
+        env: { CHEF_LICENSE: accept-no-persist }
+        working-directory: ${{env.working-directory}}

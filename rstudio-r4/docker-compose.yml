@@ -1,0 +1,15 @@
+---
+version: "3.7"
+
+services:
+  test:
+    image: quay.io/mojanalytics/rstudio:${BUILD_TAG:-latest}
+    ports: [8787:8787]
+    volumes: ["./tests/files:/tests"]
+  inspec:
+    image: chef/inspec:current
+    environment:
+      - CHEF_LICENSE=accept-no-persist
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./tests:/share/tests

@@ -1,9 +1,9 @@
 ---
-name: RStudio Build & Test
+name: "Lint"
 
 "on":
   pull_request:
-  push: { branches: [main] }
+  push: { branches: ["main"] }
 
 jobs:
   yamllint:
@@ -21,14 +21,3 @@ jobs:
         uses: actions/checkout@master
       - name: Run Markdown Lint
         uses: actionshub/markdownlint@master
-
-  docker:
-    needs: [mdl, yamllint]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
-        run: make build
-      - name: Test
-        run: make test
-        env: { CHEF_LICENSE: accept-no-persist }
