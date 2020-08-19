@@ -42,12 +42,6 @@ RUN wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
     && rm -r /install-tl-unx \
     && rm install-tl-unx.tar.gz
 
-# Install SimbaAthena & configure ODBC drivers
-RUN wget -q https://s3.amazonaws.com/athena-downloads/drivers/ODBC/SimbaAthenaODBC_1.0.3/Linux/simbaathena-1.0.3.1004-1.x86_64.rpm -P /tmp \
-    && alien -i /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm \
-    && rm -f /tmp/simbaathena-1.0.3.1004-1.x86_64.rpm
-COPY files/odbc* /etc/
-
 # Install Miniconda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
     && /bin/bash ~/miniconda.sh -b -p /opt/conda \
