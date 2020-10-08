@@ -43,6 +43,11 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: "593291632749"
+      - name: S3 Sync
+        uses: ItsKarma/aws-cli@v1.70.0
+        with:
+          args: s3 sync 
+
 
   docker:
     needs: [mdl, yamllint]
