@@ -35,6 +35,15 @@ jobs:
         with:
           registries: "593291632749"
 
+  ecr2:
+    runs-on: analytics-platform-rstudio
+    steps:
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: "593291632749"
+
   docker:
     needs: [mdl, yamllint]
     runs-on: ubuntu-latest
