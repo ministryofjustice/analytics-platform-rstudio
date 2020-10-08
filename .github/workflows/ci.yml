@@ -31,7 +31,7 @@ jobs:
           aws-region: eu-west-1
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@v1.2.2
         with:
           registries: "593291632749"
 
@@ -46,7 +46,7 @@ jobs:
       - name: S3 Sync
         uses: ItsKarma/aws-cli@v1.70.0
         with:
-          args: s3 sync 
+          args: s3 sync
 
 
   docker:
