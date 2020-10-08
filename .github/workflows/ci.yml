@@ -32,7 +32,8 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        registries: "593291632749"
+        with:
+          registries: "593291632749"
 
   docker:
     needs: [mdl, yamllint]
