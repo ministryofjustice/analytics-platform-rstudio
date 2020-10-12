@@ -29,10 +29,6 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-west-1
-      - name: install aws cli
-        uses: chrislennon/action-aws-cli@v1.1
-      - name: RUN S3list
-        run: aws s3 ls
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1.2.2
