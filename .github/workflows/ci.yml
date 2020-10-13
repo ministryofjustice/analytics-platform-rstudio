@@ -23,7 +23,7 @@ jobs:
         uses: actionshub/markdownlint@master
 
   ecr:
-    runs-on: analytics-platform-rstudio
+    runs-on: [self-hosted]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
