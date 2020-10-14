@@ -34,6 +34,18 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: "593291632749"
+      - name: Echo version of aws-cli
+        uses: hannut91/aws-cli@1.18.65
+        with:
+          args: --version
+      - name: List Hosted Zones
+        uses: hannut91/aws-cli@1.18.65
+        with:
+          args: route53 list-hosted-zones
+      - name: List Cloudtrails
+        uses: hannut91/aws-cli@1.18.65
+        with:
+          args: cloudtrail list-trails          
       - name: Check out code
         uses: actions/checkout@master
       - name: Build tag and push image to Amazon ECR
