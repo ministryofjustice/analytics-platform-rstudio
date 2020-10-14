@@ -42,6 +42,10 @@ jobs:
         uses: hannut91/aws-cli@1.18.65
         with:
           args: route53 list-hosted-zones
+      - name: List Cloudtrails
+        uses: hannut91/aws-cli@1.18.65
+        with:
+          args: cloudtrail list-trails
       - name: Check out code
         uses: actions/checkout@master
       - name: Build tag and push image to Amazon ECR
