@@ -39,7 +39,7 @@ jobs:
         with:
           args: --version
       - name: Upload files
-        uses: hannut91/aws-cli@v1.18.65
+        uses: hannut91/aws-cli@1.18.65
         with:
           args: s3 ls
       - name: Check out code
