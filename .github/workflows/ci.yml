@@ -38,10 +38,10 @@ jobs:
         uses: hannut91/aws-cli@1.18.65
         with:
           args: --version
-      - name: List
+      - name: List Hosted Zones
         uses: hannut91/aws-cli@1.18.65
         with:
-          args: s3 ls s3://kops.analytics.justice.gov.uk
+          args: route53 list-hosted-zones
       - name: Check out code
         uses: actions/checkout@master
       - name: Build tag and push image to Amazon ECR
