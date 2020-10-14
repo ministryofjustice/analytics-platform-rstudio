@@ -34,6 +34,14 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: "593291632749"
+      - name: Echo version of aws-cli
+        uses: hannut91/aws-cli@1.18.43
+        with:
+          args: --version
+      - name: Upload files
+        uses: hannut91/aws-cli@v1.18.43
+        with:
+          args: s3 ls
       - name: Check out code
         uses: actions/checkout@master
       - name: Build tag and push image to Amazon ECR
