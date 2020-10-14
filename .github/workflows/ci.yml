@@ -35,11 +35,11 @@ jobs:
         with:
           registries: "593291632749"
       - name: Echo version of aws-cli
-        uses: hannut91/aws-cli@v1
+        uses: hannut91/aws-cli@1.18.65
         with:
           args: --version
       - name: List
-        uses: hannut91/aws-cli@v1
+        uses: hannut91/aws-cli@1.18.65
         with:
           args: s3 ls s3://kops.analytics.justice.gov.uk
       - name: Check out code
