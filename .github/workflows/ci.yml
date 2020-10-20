@@ -40,10 +40,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: rstudio
-          IMAGE_TAG: ${{ github.sha }}
-        uses: aevea/action-kaniko@master
+          IMAGE_TAG: ${{ github.sha }}  
+        uses: hairmare/buildah-action@0.1.0
         with:
-          image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          tag: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
 
   docker:
