@@ -42,9 +42,7 @@ jobs:
           ECR_REPOSITORY: rstudio
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          ls
-          pwd
-          docker run gcr.io/kaniko-project/executor:debug --no-push --dockerfile=Dockerfile
+          docker run gcr.io/kaniko-project/executor:debug --no-push --dockerfile /workspace/Dockerfile
 
 
   docker:
