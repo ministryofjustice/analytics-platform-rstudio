@@ -43,7 +43,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           pwd
-          docker run -v /home/github/_work/analytics-platform-rstudio/analytics-platform-rstudio:/workspace gcr.io/kaniko-project/executor:debug --no-push --dockerfile /workspace/Dockerfile --context dir:///workspace/
+          docker run -v /home/github/_work/analytics-platform-rstudio/analytics-platform-rstudio:/workspace gcr.io/kaniko-project/executor:debug --no-push --dockerfile=/workspace/Dockerfile --context=/workspace/
 
 
   docker:
