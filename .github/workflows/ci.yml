@@ -22,8 +22,13 @@ jobs:
       - name: Run Markdown Lint
         uses: actionshub/markdownlint@master
 
-  ecr:
+  docker:
     runs-on: [self-hosted, kubernetes]
+    env:
+      REPOSITORY: rstudio
+      IMAGE_TAG: ${{ github.sha }}
+      REGISTRY: "593291632749"
+    needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -33,26 +38,17 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registries: "593291632749"
+          registry: ${{ env.REGISTRY }}
       - name: Check out code
-        uses: actions/checkout@master
-      - name: Build tag and push image to Amazon ECR
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: rstudio
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build --network=host -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        working-directory: ${{env.working-directory}}
-
-  docker:
-    needs: [mdl, yamllint]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build
+        uses: actions/checkout@v2
+      - name: Build image
         run: make build
+        env:
+          network: host
+        working-directory: ${{env.working-directory}}
       - name: Test
         run: make test
         env: { CHEF_LICENSE: accept-no-persist }
+      - name: Push image
+        run: make push
+        working-directory: ${{ env.working-directory }}
