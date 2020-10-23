@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@master
       - name: Build tag and push image to Amazon ECR
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: rstudio
           IMAGE_TAG: ${{ github.sha }}
         run: |
