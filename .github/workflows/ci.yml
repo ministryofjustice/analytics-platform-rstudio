@@ -43,7 +43,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Build image
         run: make build
-        env: { NETWORK: host }
+        env:
+          NETWORK: host
         working-directory: ${{env.working-directory}}
       - name: Test
         run: make test
