@@ -10,15 +10,15 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Check out code
-        uses: actions/checkout@master
+        uses: actions/checkout@main
       - name: Run yaml Lint
-        uses: actionshub/yamllint@master
+        uses: actionshub/yamllint@main
 
   mdl:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@master
+        uses: actions/checkout@main
       - name: Run Markdown Lint
         uses: actionshub/markdownlint@master
 
@@ -43,8 +43,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Build image
         run: make build
-        env:
-          network: host
+        env: { NETWORK: host }
         working-directory: ${{env.working-directory}}
       - name: Test
         run: make test
