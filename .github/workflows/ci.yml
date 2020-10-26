@@ -27,9 +27,9 @@ jobs:
     env:
       IMAGE_TAG: ${{ github.sha }}
       REPOSITORY: rstudio
-      ECR_REPOSITORY: ${{ env.REPOSITORY }}
+      ECR_REPOSITORY: rstudio
       REGISTRY: "593291632749"
-      ECR_REGISTRY: ${{ env.REGISTRY }}
+      ECR_REGISTRY: "593291632749"
     needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
