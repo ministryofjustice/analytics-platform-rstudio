@@ -25,9 +25,11 @@ jobs:
   docker:
     runs-on: [self-hosted]
     env:
-      REPOSITORY: rstudio
       IMAGE_TAG: ${{ github.sha }}
+      REPOSITORY: rstudio
+      ECR_REPOSITORY: ${{ env.REPOSITORY }}
       REGISTRY: "593291632749"
+      ECR_REGISTRY: ${{ env.REGISTRY }}
     needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
@@ -38,7 +40,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry: ${{ env.REGISTRY }}
+          registries: ${{ env.REGISTRY }}
       - name: Check out code
         uses: actions/checkout@v2
       - name: Build image
