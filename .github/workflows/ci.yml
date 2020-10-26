@@ -48,9 +48,9 @@ jobs:
         env:
           NETWORK: host
         working-directory: ${{env.working-directory}}
-      - name: Test
-        run: make test
-        env: { CHEF_LICENSE: accept-no-persist }
+      # - name: Test
+      #   run: make test
+      #   env: { CHEF_LICENSE: accept-no-persist }
       - name: Push image
         run: make push
         working-directory: ${{ env.working-directory }}
