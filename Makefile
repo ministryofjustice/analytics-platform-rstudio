@@ -19,8 +19,8 @@ push:
 test:
 	echo Testing Container Version: ${IMAGE_TAG}
 	docker-compose --project-name ${REPOSITORY} up -d test
-	docker-compose run --rm inspec
-	# docker-compose run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
+	# docker-compose run ---rm inspec
+	docker-compose run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
 enter:
 	docker-compose --project-name ${REPOSITORY} run --rm test bash

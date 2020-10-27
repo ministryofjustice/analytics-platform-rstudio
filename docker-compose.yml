@@ -10,7 +10,6 @@ services:
     image: chef/inspec:current
     environment:
       - CHEF_LICENSE=accept-no-persist
-    entrypoint: ["ls", "-la", "tests"]
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      # - /var/run/docker.sock:/var/run/docker.sock
       - ./tests:/share/tests
