@@ -21,6 +21,7 @@ push:
 inspec:
 	docker-compose --project-name ${REPOSITORY} up -d test
 	docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
+	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests
 
 test: #clean
 	echo Testing Container Version: ${IMAGE_TAG}
