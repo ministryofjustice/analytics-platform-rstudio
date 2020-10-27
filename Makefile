@@ -16,7 +16,7 @@ build:
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
-test:
+test: clean
 	echo Testing Container Version: ${IMAGE_TAG}
 	docker-compose --project-name ${REPOSITORY} up -d test
 	docker-compose --project-name ${REPOSITORY} up -d inspec
