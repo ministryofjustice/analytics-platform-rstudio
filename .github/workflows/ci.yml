@@ -28,7 +28,7 @@ jobs:
       IMAGE_TAG: ${{ github.sha }}
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
-    needs: [mdl, yamllint]
+    # needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
