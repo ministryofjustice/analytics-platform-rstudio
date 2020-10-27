@@ -24,7 +24,7 @@ inspec:
 test: #clean
 	echo Testing Container Version: ${IMAGE_TAG}
 	docker-compose --project-name ${REPOSITORY} up -d test
-	inspec exec https://github.com/dev-sec/linux-baseline -t docker://${REPOSITORY}_test_1
+	inspec exec tests -t docker://${REPOSITORY}_test_1
 
 enter:
 	docker-compose --project-name ${REPOSITORY} run --rm test bash
