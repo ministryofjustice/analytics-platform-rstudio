@@ -2,12 +2,25 @@
 version: "3.7"
 
 services:
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+      network: ${NETWORK:-default}
+    volumes:
+      - tests:/tests
+      - test_files:/files
   test:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
     ports: [8787:8787]
-    # volumes: ["./tests/files:/tests"]
+    volumes:
+      - tests:/tests
   inspec:
     image: chef/inspec:current
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - .:/share
+      - tests:/share/tests
+
+volumes:
+  test_files:
+  tests:

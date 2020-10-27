@@ -1,0 +1,4 @@
+FROM scratch
+
+COPY tests /tests
+COPY files /files

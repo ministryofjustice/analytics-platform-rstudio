@@ -12,6 +12,7 @@ pull:
 	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
 build:
+	docker-compose build tests
 	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
 
 push:
