@@ -9,6 +9,6 @@ control 'Conda available' do
 
   describe command('conda info') do
     its('exit_status') { should eq 0 }
-    its('stdout') { should match /conda version : 4.8.4/ }
+    its('stdout') { should match /conda version : 4.9.0/ }
   end
 end

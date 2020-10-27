@@ -41,6 +41,10 @@ jobs:
           registries: ${{ steps.login-ecr.outputs.registry }}
       - name: Check out code
         uses: actions/checkout@v2
+      - name: Login Output
+        run: |
+          echo "${{ steps.login-ecr.outputs }}"
+          echo "${{ steps.login-ecr.outputs.registry }}"
       - name: Build image
         run: make build
         env:
@@ -49,6 +53,6 @@ jobs:
       #   run: make test
       #   env: { CHEF_LICENSE: accept-no-persist }
       - name: Push image
-        run: make build
+        run: make push
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
