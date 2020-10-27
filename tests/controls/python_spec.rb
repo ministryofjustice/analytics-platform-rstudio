@@ -18,6 +18,7 @@ control 'Pandas can read a CSV' do
   title 'Python Pandas is installed and can read a CSV'
   desc 'Reading from a CSV is a common task'
   tag 'python'
+  only_if { ::File.exist('/tests/pandas_read_csv.py') }
 
   describe command('python /tests/pandas_read_csv.py') do
     its('stdout') { should match /foo bar baz/ }
@@ -31,7 +32,7 @@ control 'Pandas can read a CSV from S3' do
   desc 'Python Pandas is installed and can read a CSV from s3'
   tag 'python'
   tag 'known_broken'
-  only_if { ::File.exists('/tests/pandas_read_s3.py')}
+  only_if { ::File.exist('/tests/pandas_read_s3.py')}
 
   describe command('python /tests/pandas_read_s3.py') do
     its('stdout') { should_not match /foo bar baz/ }
