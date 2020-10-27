@@ -23,7 +23,8 @@ jobs:
         uses: actionshub/markdownlint@master
 
   docker:
-    runs-on: [self-hosted]
+    # runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     env:
       IMAGE_TAG: ${{ github.sha }}
       REPOSITORY: rstudio
