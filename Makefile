@@ -2,8 +2,8 @@ SHELL = '/bin/bash'
 export IMAGE_TAG ?= local
 export DOCKER_BUILDKIT?=1
 export REPOSITORY?=rstudio
-export REGISTRY?="quay.io/mojanalytics"
-export NETWORK?=bridge
+export REGISTRY?=""
+export NETWORK?=default
 
 .PHONY: build test
 

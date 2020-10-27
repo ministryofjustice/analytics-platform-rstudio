@@ -28,8 +28,6 @@ jobs:
       IMAGE_TAG: ${{ github.sha }}
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
-      REGISTRY: "593291632749"
-      ECR_REGISTRY: "593291632749"
     needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
@@ -40,17 +38,17 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registries: ${{ env.REGISTRY }}
+          registries: ${{ steps.login-ecr.outputs.registry }}
       - name: Check out code
         uses: actions/checkout@v2
       - name: Build image
         run: make build
         env:
           NETWORK: host
-        working-directory: ${{env.working-directory}}
       # - name: Test
       #   run: make test
       #   env: { CHEF_LICENSE: accept-no-persist }
       - name: Push image
-        run: make push
-        working-directory: ${{ env.working-directory }}
+        run: make build
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
