@@ -46,7 +46,7 @@ jobs:
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      - name: install inspec
+      - name: Install InSpec
         uses: actionshub/chef-install@master
         with:
           channel: current
