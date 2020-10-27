@@ -23,7 +23,7 @@ inspec:
 test: clean
 	echo Testing Container Version: ${IMAGE_TAG}
 	ls
-	cat docker-compose
+	cat docker-compose.yml
 	docker-compose --project-name ${REPOSITORY} up -d test
 	docker-compose --project-name ${REPOSITORY} run --entrypoint "ls -la /share/tests" inspec
 	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
