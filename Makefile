@@ -4,6 +4,7 @@ export DOCKER_BUILDKIT?=1
 export REPOSITORY?=rstudio
 export REGISTRY?=mojanalytics
 export NETWORK?=default
+export CHEF_LICENSE=accept-no-persist
 
 .PHONY: build test
 
