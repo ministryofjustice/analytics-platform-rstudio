@@ -50,9 +50,9 @@ jobs:
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      # - name: Test
-      #   run: make test
-      #   env: { CHEF_LICENSE: accept-no-persist }
+      - name: Test
+        run: make test
+        env: { CHEF_LICENSE: accept-no-persist }
       - name: Push image
         run: make push
         env:
