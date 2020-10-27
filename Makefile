@@ -25,6 +25,7 @@ test: #clean
 	ls
 	docker run -v ${PWD}:/share -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /share
 	docker run -v ${PWD}:/share -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /share/tests
+	docker run -v ${PWD}:/share -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /usr/local/bundle/bin/inspec
 
 test_old:
 	# docker-compose --project-name ${REPOSITORY} up -d test
