@@ -24,7 +24,7 @@ test: #clean
 	echo Testing Container Version: ${IMAGE_TAG}
 	ls
 	docker run -v ${PWD}:/share -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /share
-	docker run -v ${PWD}/tests:/share/tests -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /share/tests
+	docker run -v ${PWD}/tests:/share/tests -e CHEF_LICENSE=accept-no-persist --entrypoint "ls" --rm chef/inspec:current /share/tests/*
 
 test_old:
 	# docker-compose --project-name ${REPOSITORY} up -d test
