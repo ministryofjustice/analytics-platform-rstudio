@@ -46,6 +46,11 @@ jobs:
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      - name: install inspec
+        uses: actionshub/chef-install@master
+        with:
+          channel: current
+          project: inspec
       - name: Test
         run: make test
         env:
