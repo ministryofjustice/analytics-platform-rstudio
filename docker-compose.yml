@@ -11,5 +11,5 @@ services:
     environment:
       - CHEF_LICENSE=accept-no-persist
     volumes:
-      # - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock
       - .:/share
