@@ -59,3 +59,7 @@ jobs:
         run: make push
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      - name: Cleanup
+        run: make clean
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
