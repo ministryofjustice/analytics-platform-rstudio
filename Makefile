@@ -22,6 +22,7 @@ inspec:
 
 test: clean
 	echo Testing Container Version: ${IMAGE_TAG}
+	ls
 	docker-compose --project-name ${REPOSITORY} up -d test
 	docker-compose --project-name ${REPOSITORY} ps
 	docker-compose --project-name ${REPOSITORY} run --entrypoint "ls -la /share" inspec
