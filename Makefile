@@ -18,12 +18,12 @@ build:
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
-inspec:
+inspec: clean
 	docker-compose --project-name ${REPOSITORY} up -d test
 	docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
 	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
-test: #clean
+test: clean
 	echo Testing Container Version: ${IMAGE_TAG}
 	docker-compose --project-name ${REPOSITORY} up -d test
 	inspec exec tests -t docker://${REPOSITORY}_test_1

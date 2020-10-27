@@ -17,6 +17,8 @@ services:
       - tests:/tests
   inspec:
     image: chef/inspec:current
+    environment:
+      CHEF_LICENSE: accept-no-persist
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - tests:/share/tests
