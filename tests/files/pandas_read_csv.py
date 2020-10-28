@@ -1,5 +1,5 @@
 import pandas as pd
 
-csv = pd.read_csv("/tests/test.csv")
+csv = pd.read_csv("/share/tests/files/test.csv")
 
 print(csv)

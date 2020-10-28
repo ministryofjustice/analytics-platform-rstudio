@@ -21,13 +21,12 @@ push:
 inspec: #clean
 	# docker-compose --project-name ${REPOSITORY} up -d test
 	# docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm inspec
-	# docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm test
+	docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm test
 	# docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
 	# inspec exec tests -t docker://${REPOSITORY}_test_1
 
-test: clean
+test: clean build up
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose --project-name ${REPOSITORY} up -d --build test tests
 	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
 enter:
@@ -36,6 +35,7 @@ enter:
 clean:
 	docker-compose down
 	docker-compose --project-name ${REPOSITORY} down
+	# docker volume rm rstudio_tests
 
 up:
-	docker-compose --project-name ${REPOSITORY} up -d --build tests test
+	docker-compose --project-name ${REPOSITORY} up -d tests test
