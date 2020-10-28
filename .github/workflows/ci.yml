@@ -25,7 +25,7 @@ jobs:
   docker:
     runs-on: [self-hosted]
     env:
-      IMAGE_TAG: ${{ github.sha }}
+      # IMAGE_TAG: ${{ github.sha }}
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
     needs: [mdl, yamllint]
@@ -74,6 +74,7 @@ jobs:
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.prep.outputs.tags }}
       - name: Install InSpec
         uses: actionshub/chef-install@master
         with:
@@ -83,12 +84,15 @@ jobs:
         run: make test
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.prep.outputs.tags }}
       - name: Push image
         run: make push
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.prep.outputs.tags }}
       - name: Cleanup
         if: ${{ always() }}
         run: make clean
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ steps.prep.outputs.tags }}
