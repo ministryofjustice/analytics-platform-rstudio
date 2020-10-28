@@ -31,7 +31,7 @@ jobs:
     needs: [mdl, yamllint]
     steps:
       - name: Prep Tags
-        id: Prepare Tags
+        id: prep
         run: |
           DOCKER_IMAGE=${{ steps.login-ecr.outputs.registry }}/${{ env.REPOSITORY }}
           VERSION=noop
