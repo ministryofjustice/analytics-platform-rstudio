@@ -56,7 +56,7 @@ jobs:
             TAG="sha-${GITHUB_SHA::8}"
           fi
 
-          echo ::set-output name=tag:${TAG}
+          echo ::set-output name=tag::${TAG}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 
       - name: Check out code
