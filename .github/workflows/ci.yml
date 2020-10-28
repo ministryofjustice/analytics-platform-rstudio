@@ -54,8 +54,8 @@ jobs:
             fi
           elif [[ $GITHUB_REF == refs/pull/* ]]; then
             VERSION=pr-${{ github.event.number }}
-          elif [ "${{ github.event_name }}" = "push" ]; then
-            VERSION=sha-${GITHUB_SHA::8}"
+          # elif [ "${{ github.event_name }}" = "push" ]; then
+          #   VERSION="sha-${GITHUB_SHA::8}"
           fi
 
           TAGS="${DOCKER_IMAGE}:${VERSION}"
