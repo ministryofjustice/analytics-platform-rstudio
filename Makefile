@@ -20,7 +20,8 @@ push:
 
 inspec: #clean
 	# docker-compose --project-name ${REPOSITORY} up -d test
-	docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm inspec
+	# docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm inspec
+	# docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm test
 	# docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
 	# inspec exec tests -t docker://${REPOSITORY}_test_1
 

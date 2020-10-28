@@ -13,7 +13,7 @@ services:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
     ports: [8787:8787]
     volumes:
-      - tests:/tests
+      - tests:/share/tests
   inspec:
     image: chef/inspec:current
     environment:
