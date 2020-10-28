@@ -6,7 +6,7 @@ export REGISTRY?=mojanalytics
 export NETWORK?=default
 export CHEF_LICENSE=accept-no-persist
 
-.PHONY: build test
+.PHONY: build test pull push inspec up clean
 
 pull:
 	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
@@ -18,19 +18,23 @@ build:
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
-inspec: clean
-	docker-compose --project-name ${REPOSITORY} up -d test
-	docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
-	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
+inspec: #clean
+	# docker-compose --project-name ${REPOSITORY} up -d test
+	docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm inspec
+	# docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
+	# inspec exec tests -t docker://${REPOSITORY}_test_1
 
 test: clean
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose --project-name ${REPOSITORY} up -d test
-	inspec exec tests -t docker://${REPOSITORY}_test_1
+	docker-compose --project-name ${REPOSITORY} up -d --build test tests
+	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
 enter:
-	docker-compose --project-name ${REPOSITORY} run --rm test bash
+	# docker-compose --project-name ${REPOSITORY} --entrypoint bash run --rm inspec
 
 clean:
 	docker-compose down
 	docker-compose --project-name ${REPOSITORY} down
+
+up:
+	docker-compose --project-name ${REPOSITORY} up -d --build tests test

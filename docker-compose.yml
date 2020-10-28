@@ -9,7 +9,6 @@ services:
       network: ${NETWORK:-default}
     volumes:
       - tests:/tests
-      - test_files:/files
   test:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
     ports: [8787:8787]
@@ -21,8 +20,7 @@ services:
       CHEF_LICENSE: accept-no-persist
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - tests:/share/tests
+      - tests:/share/tests:ro
 
 volumes:
-  test_files:
   tests:
