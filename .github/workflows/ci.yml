@@ -30,6 +30,15 @@ jobs:
       ECR_REPOSITORY: rstudio
     needs: [mdl, yamllint]
     steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: eu-west-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: ${{ steps.login-ecr.outputs.registry }}
       - name: Prep Tags
         id: prep
         run: |
@@ -58,15 +67,6 @@ jobs:
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
           echo $VERSION
           echo $TAGS
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: eu-west-1
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-        with:
-          registries: ${{ steps.login-ecr.outputs.registry }}
       - name: Check out code
         uses: actions/checkout@v2
       - name: Build image
