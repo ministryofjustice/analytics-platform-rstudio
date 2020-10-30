@@ -1,4 +1,3 @@
 FROM bash
 
 COPY tests /tests
-COPY files /files

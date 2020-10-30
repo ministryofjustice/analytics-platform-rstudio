@@ -18,6 +18,10 @@ control 'PATH variable' do
   end
 
   describe os_env('R_VERSION') do
-    its('content') { should eq '3.5.1'}
+    its('content') { should eq '4.0.3'}
+  end
+
+  describe os_env('AWS_DEFAULT_REGION') do
+    its('content') { should eq 'eu-west-1'}
   end
 end
