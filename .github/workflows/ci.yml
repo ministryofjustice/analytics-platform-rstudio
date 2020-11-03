@@ -23,7 +23,7 @@ jobs:
         uses: actionshub/markdownlint@master
 
   docker:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, ecr]
     env:
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
