@@ -3,8 +3,9 @@ name: RStudio Build & Test
 
 "on":
   pull_request:
-  push: { branches: [main] }
-  tags: '*'
+  push: 
+    branches: [main]
+    tags: '*'
 
 jobs:
   yamllint:
