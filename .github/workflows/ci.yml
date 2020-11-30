@@ -3,7 +3,7 @@ name: RStudio Build & Test
 
 "on":
   pull_request:
-  push: 
+  push:
     branches: [main]
     tags: '*'
 
