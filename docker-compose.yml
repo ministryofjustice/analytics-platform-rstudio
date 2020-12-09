@@ -12,10 +12,12 @@ services:
   test:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
     ports: [8787:8787]
+    network_mode: ${NETWORK}
     volumes:
       - tests:/share/tests
   inspec:
     image: chef/inspec:current
+    network_mode: ${NETWORK}
     environment:
       CHEF_LICENSE: accept-no-persist
     volumes:
