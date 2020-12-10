@@ -3,6 +3,7 @@ name: Repo Sync
 on:
   schedule:
     - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 jobs:
   repo-sync:
@@ -21,5 +22,5 @@ jobs:
         name: Create pull request
         with:
           source_branch: ${{ secrets.INTERMEDIATE_BRANCH }}
-          destination_branch: "master"
+          destination_branch: "main"
           github_token: ${{ secrets.GITHUB_TOKEN }}
