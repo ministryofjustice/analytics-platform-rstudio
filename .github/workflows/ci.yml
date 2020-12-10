@@ -6,15 +6,8 @@ name: RStudio Build & Test
   push: { branches: [main] }
 
 jobs:
-  echo:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: echo
-        if: ${{ github.repository }} == 'analytics-platform-rstudio'
-        run: echo ${{ github.repository }}
-
   yamllint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out code
         uses: actions/checkout@main
@@ -22,7 +15,7 @@ jobs:
         uses: actionshub/yamllint@main
 
   mdl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out code
         uses: actions/checkout@main
