@@ -9,7 +9,7 @@ name: Repo Sync
 jobs:
   repo-sync:
     name: Repo Sync
-    if: github.repository == 'analytics-platform-rstudio-public'
+    if: ${{ github.repository }} == 'analytics-platform-rstudio-public'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

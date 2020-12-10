@@ -30,7 +30,7 @@ jobs:
         uses: actionshub/markdownlint@main
 
   docker:
-    # if: ${GITHUB_REPOSITORY} == 'analytics-platform-rstudio'
+    if: ${{ github.repository }} == 'analytics-platform-rstudio'
     runs-on: [self-hosted, ecr]
     env:
       REPOSITORY: rstudio
