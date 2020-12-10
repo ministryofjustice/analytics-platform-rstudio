@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: echo
+        if: ${{ github.repository }} == 'analytics-platform-rstudio'
         run: echo ${{ github.repository }}
-      - name: debug-step
-        uses: hmarr/debug-action@master
 
   yamllint:
     runs-on: ubuntu-latest
