@@ -12,7 +12,7 @@ jobs:
       - name: echo
         run: echo ${{ github.repository }}
       - name: debug-step
-        uses: hmarr/debug-action
+        uses: hmarr/debug-action@master
 
   yamllint:
     runs-on: ubuntu-latest
