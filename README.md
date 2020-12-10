@@ -2,6 +2,9 @@
 
 RStudio Docker image for Analytics Platform. Used by [RStudio helm chart](https://github.com/ministryofjustice/analytics-platform-helm-charts/tree/master/charts/rstudio).
 
+**NB Changes in this repo are public**
+This work is done in an [https://github.com/ministryofjustice/analytics-platform-rstudio](internal repo) and immediately sync'ed to a [https://github.com/ministryofjustice/analytics-platform-rstudio-public](public copy). This allows the [sensitive CI/CD](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners#self-hosted-runner-security-with-public-repositories) to run in private, but to maintain our commitment to [code in the open](https://www.gov.uk/service-manual/service-standard/point-12-make-new-source-code-open). [Further info](https://docs.google.com/document/d/1BGyHttQa3wI-UsdCBqu-398yZRhnjCuldHHgwTVaJSg/edit)
+
 ## Builds
 
 The docker image is built using GitHub Actions and hosted on an internal ECR repository.
