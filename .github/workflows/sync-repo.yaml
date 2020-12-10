@@ -1,6 +1,7 @@
+---
 name: Repo Sync
 
-on:
+"on":
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:

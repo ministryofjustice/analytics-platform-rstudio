@@ -6,6 +6,14 @@ name: RStudio Build & Test
   push: { branches: [main] }
 
 jobs:
+  echo:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: echo
+        run: echo ${{ github.repository }}
+      - name: debug-step
+        uses: hmarr/debug-action
+
   yamllint:
     runs-on: ubuntu-latest
     steps:
@@ -20,10 +28,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@main
       - name: Run Markdown Lint
-        uses: actionshub/markdownlint@master
+        uses: actionshub/markdownlint@main
 
   docker:
-    if: github.repository == 'analytics-platform-rstudio'
+    if: ${GITHUB_REPOSITORY} == 'analytics-platform-rstudio'
     runs-on: [self-hosted, ecr]
     env:
       REPOSITORY: rstudio
