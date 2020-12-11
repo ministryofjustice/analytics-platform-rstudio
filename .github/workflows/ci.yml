@@ -8,21 +8,21 @@ name: RStudio Build & Test
     tags: ["*"]
 
 jobs:
-  # yamllint:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@main
-  #     - name: Run yaml Lint
-  #       uses: actionshub/yamllint@main
+  yamllint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@main
+      - name: Run yaml Lint
+        uses: actionshub/yamllint@main
 
-  # mdl:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@main
-  #     - name: Run Markdown Lint
-  #       uses: actionshub/markdownlint@main
+  mdl:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@main
+      - name: Run Markdown Lint
+        uses: actionshub/markdownlint@main
 
   docker:
     if: ${{ github.repository }} == 'analytics-platform-rstudio'
@@ -30,7 +30,7 @@ jobs:
     env:
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
-    # needs: [mdl, yamllint]
+    needs: [mdl, yamllint]
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
