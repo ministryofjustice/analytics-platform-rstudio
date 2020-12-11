@@ -4,18 +4,25 @@ version: "3.7"
 services:
   tests:
     image: ${REGISTRY}/${REPOSITORY}-test:${IMAGE_TAG:-latest}
-    network_mode: ${NETWORK}
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+      network: ${NETWORK:-default}
+    network_mode: ${NETWORK:-default}
     volumes:
       - tests:/tests
   test:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
     ports: [8787:8787]
-    network_mode: ${NETWORK}
+    network_mode: ${NETWORK:-default}
     volumes:
       - tests:/share/tests
   inspec:
     image: chef/inspec:current
-    network_mode: ${NETWORK}
+    network_mode: ${NETWORK:-default}
     environment:
       CHEF_LICENSE: accept-no-persist
     volumes:
