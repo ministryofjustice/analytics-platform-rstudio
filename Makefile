@@ -6,14 +6,16 @@ export REGISTRY?=mojanalytics
 export NETWORK?=default
 export CHEF_LICENSE=accept-no-persist
 
-.PHONY: build test pull push inspec up clean
+.PHONY: build test pull push up clean
 
 pull:
 	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
 build:
-	docker-compose build --no-cache tests
-	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
+	docker buildx build -f Dockerfile.tests . -t ${REGISTRY}/${REPOSITORY}-test:${IMAGE_TAG} --load --network=${NETWORK}
+	@echo "Showing Conda Spec"
+	docker run -it --rm ${REGISTRY}/${REPOSITORY}-test:${IMAGE_TAG} cat /tests/controls/conda_spec.rb
+	docker buildx build -f Dockerfile . -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} --load --network=${NETWORK}
 
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}

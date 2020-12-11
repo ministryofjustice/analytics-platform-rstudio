@@ -3,10 +3,8 @@ version: "3.7"
 
 services:
   tests:
-    build:
-      context: .
-      dockerfile: Dockerfile.tests
-      network: ${NETWORK:-default}
+    image: ${REGISTRY}/${REPOSITORY}-test:${IMAGE_TAG:-latest}
+    network_mode: ${NETWORK}
     volumes:
       - tests:/tests
   test:
