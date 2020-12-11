@@ -32,4 +32,6 @@ test: clean up
 	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
 
 bake:
-	docker buildx bake --load
+	docker --help
+	docker buildx --help
+	# docker buildx bake --load
