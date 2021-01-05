@@ -34,8 +34,3 @@ ps:
 
 logs:
 	docker-compose --project-name ${REPOSITORY} logs -f test
-
-
-inspec:
-	docker-compose --project-name ${REPOSITORY}
-	# docker-compose --project-name ${REPOSITORY} run --entrypoint sh --rm inspec
