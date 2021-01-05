@@ -34,3 +34,6 @@ ps:
 
 logs:
 	docker-compose --project-name ${REPOSITORY} logs -f test
+
+debug:
+	docker-compose --project-name ${REPOSITORY} run test ls /share/tests/files

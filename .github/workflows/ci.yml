@@ -5,7 +5,7 @@ name: RStudio Build & Test
   pull_request:
   push:
     branches: [main]
-    tags: '*'
+    tags: "*"
 
 jobs:
   yamllint:
@@ -78,6 +78,7 @@ jobs:
       - name: Test
         run: |
           make clean
+          make debug
           make test
         env:
           NETWORK: host

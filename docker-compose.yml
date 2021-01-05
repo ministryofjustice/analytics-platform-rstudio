@@ -14,7 +14,7 @@ services:
     ports: [8787:8787]
     network_mode: ${NETWORK}
     volumes:
-      - tests:/share/tests
+      - tests:/share/tests:ro
     environment:
       AWS_DEFAULT_REGION: eu-west-1
       AWS_REGION: eu-west-1
