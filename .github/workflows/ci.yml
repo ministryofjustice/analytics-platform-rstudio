@@ -78,7 +78,6 @@ jobs:
       - name: Test
         run: |
           make clean
-          make debug
           make test
         env:
           NETWORK: host
