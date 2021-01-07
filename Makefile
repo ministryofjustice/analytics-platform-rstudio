@@ -1,8 +1,8 @@
 SHELL = '/bin/bash'
-export IMAGE_TAG ?= local
+export IMAGE_TAG ?= 4.0.3
 export DOCKER_BUILDKIT?=1
 export REPOSITORY?=rstudio
-export REGISTRY?=mojanalytics
+export REGISTRY?=593291632749.dkr.ecr.eu-west-1.amazonaws.com
 export NETWORK?=default
 export CHEF_LICENSE=accept-no-persist
 
@@ -33,7 +33,10 @@ ps:
 	docker-compose --project-name ${REPOSITORY} ps
 
 logs:
-	docker-compose --project-name ${REPOSITORY} logs -f test
+	docker-compose --project-name ${REPOSITORY} logs -f test auth-proxy
 
 debug:
 	docker-compose --project-name ${REPOSITORY} run test ls /share/tests/files
+
+enter:
+	docker-compose --project-name ${REPOSITORY} exec test bash
