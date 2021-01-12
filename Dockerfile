@@ -16,6 +16,8 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   python3 \
   python3-pip \
   python3-pandas \
+  libxml2-dev \
+  libgdal-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
