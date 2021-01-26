@@ -2,6 +2,7 @@ FROM rocker/rstudio:4.0.3
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
+COPY userconf.patch /userconf.patch
 
 ENV LC_ALL="en_GB.UTF-8" \
   LANG="en_GB.UTF-8" \
@@ -24,3 +25,5 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 &&\
   command -v python &&\
   command -v pip
+
+RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch

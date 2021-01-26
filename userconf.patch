@@ -1,0 +1,11 @@
+--- /rocker_scripts/userconf.sh	2021-01-26 16:44:51.000000000 +0000
++++ /rocker_scripts/userconf.sh	2021-01-26 16:45:15.000000000 +0000
+@@ -70,7 +70,7 @@
+     usermod -l $USER -d /home/$USER rstudio
+     groupmod -n $USER rstudio
+     usermod -a -G staff $USER
+-    chown -R $USER:$USER /home/$USER
++    # chown -R $USER:$USER /home/$USER
+     echo "USER is now $USER"
+ fi
+
