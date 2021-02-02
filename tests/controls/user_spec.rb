@@ -3,8 +3,7 @@ title 'RStudio User'
 control 'Common Users' do
   impact 'high'
   title 'The rstudio user should exist'
-  desc 'We create a new user on boot in start.sh. The default rstudio user should be 1000' \
-  'The UID 1001 should be free for us to create a user at run time'
+  desc 'The default rstudio user should be 1000'
   tag 'user'
   tag 'group'
 

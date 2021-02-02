@@ -8,7 +8,7 @@ control 'Python version' do
   tag 'version'
 
   describe command('python --version') do
-    its('stdout') { should match /Python 3.7/ }
+    its('stdout') { should match /Python 3.8/ }
     its('exit_status') { should eq 0 }
   end
 end
