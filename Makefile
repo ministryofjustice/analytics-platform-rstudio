@@ -15,6 +15,9 @@ build:
 	docker-compose build --no-cache test_files
 	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
 
+bake:
+	docker buildx bake --load
+
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
