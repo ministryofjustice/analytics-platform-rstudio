@@ -17,8 +17,10 @@ build:
 push:
 	docker-compose push ${REPOSITORY}
 
-test: clean up
+test: up
 	echo Testing Container Version: ${IMAGE_TAG}
+	docker-compose --project-name ${REPOSITORY} up -d test_files
+	docker-compose --project-name ${REPOSITORY} run --rm inspec check tests
 	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_${REPOSITORY}_1
 
 clean:
@@ -35,4 +37,4 @@ logs:
 	docker-compose --project-name ${REPOSITORY} logs -f ${REPOSITORY} auth-proxy
 
 enter:
-	docker-compose --project-name ${REPOSITORY} exec ${REPOSITORY} bash
+	docker-compose --project-name ${REPOSITORY} exec inspec bash

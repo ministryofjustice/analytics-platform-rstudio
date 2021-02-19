@@ -36,12 +36,14 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: eu-west-1
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
           registries: ${{ steps.login-ecr.outputs.registry }}
       - name: Prep Tags
+
         id: prep
         run: |
           TAG=noop
@@ -64,30 +66,27 @@ jobs:
 
       - name: Check out code
         uses: actions/checkout@v2
+
       - name: Build image
-        run: make build
+        run: make clean && make build
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.prep.outputs.tag }}
-      - name: Install InSpec
-        uses: actionshub/chef-install@master
-        with:
-          channel: current
-          project: inspec
+
       - name: Test
-        run: |
-          make clean
-          make test
+        run: make test
         env:
           NETWORK: host
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.prep.outputs.tag }}
+
       - name: Push image
         run: make push
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ steps.prep.outputs.tag }}
+
       - name: Cleanup
         if: ${{ always() }}
         run: make clean
