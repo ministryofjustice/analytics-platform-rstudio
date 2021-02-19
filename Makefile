@@ -19,19 +19,19 @@ push:
 
 test: clean up
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose run --rm inspec exec tests -t docker://analytics-platform-rstudio-${REPOSITORY}_1
+	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}-${REPOSITORY}_1
 
 clean:
-	docker-compose down --volumes --remove-orphans
+	docker-compose --project-name ${REPOSITORY} down --volumes --remove-orphans
 
 up:
-	docker-compose up -d ${REPOSITORY}
+	docker-compose --project-name ${REPOSITORY} up -d ${REPOSITORY}
 
 ps:
-	docker-compose ps
+	docker-compose --project-name ${REPOSITORY} ps
 
 logs:
-	docker-compose logs -f ${REPOSITORY} auth-proxy
+	docker-compose --project-name ${REPOSITORY} logs -f ${REPOSITORY} auth-proxy
 
 enter:
-	docker-compose exec ${REPOSITORY} bash
+	docker-compose --project-name ${REPOSITORY} exec ${REPOSITORY} bash
