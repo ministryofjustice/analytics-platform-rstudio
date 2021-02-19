@@ -12,8 +12,7 @@ pull:
 	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
 
 build:
-	docker-compose build --no-cache test_files
-	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
+	docker buildx bake --load
 
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
@@ -27,7 +26,7 @@ clean:
 	docker-compose --project-name ${REPOSITORY} down --volumes
 
 up:
-	docker-compose --project-name ${REPOSITORY} up --build -d test_files test
+	docker-compose --project-name ${REPOSITORY} up --build -d test
 
 ps:
 	docker-compose --project-name ${REPOSITORY} ps

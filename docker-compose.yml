@@ -24,8 +24,12 @@ services:
       RSTUDIO_SECURE_COOKIE_KEY: 8865825c306d4bd1a90c505dcde189fb
       TARGET_URL: http://0.0.0.0:8787
 
-  test:
+  rstudio:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: ${NETWORK:-default}
     ports: [8787:8787]
     network_mode: ${NETWORK}
     volumes: [tests:/share/tests:ro]
@@ -34,6 +38,7 @@ services:
       AWS_DEFAULT_REGION: eu-west-1
       AWS_REGION: eu-west-1
       SECURE_COOKIE_KEY: 8865825c306d4bd1a90c505dcde189fb
+
   inspec:
     image: chef/inspec:current
     network_mode: ${NETWORK}
