@@ -9,7 +9,7 @@ export CHEF_LICENSE=accept-no-persist
 .PHONY: build test pull push inspec up clean ps
 
 pull:
-	docker-compose push ${REPOSITORY}
+	docker-compose pull ${REPOSITORY}
 
 build:
 	docker buildx bake --load
