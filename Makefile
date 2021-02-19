@@ -19,9 +19,10 @@ push:
 
 test: clean up
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}-${REPOSITORY}_1
+	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_${REPOSITORY}_1
 
 clean:
+	docker-compose down --volumes --remove-orphans
 	docker-compose --project-name ${REPOSITORY} down --volumes --remove-orphans
 
 up:
