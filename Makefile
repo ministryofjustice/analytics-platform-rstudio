@@ -9,33 +9,29 @@ export CHEF_LICENSE=accept-no-persist
 .PHONY: build test pull push inspec up clean ps
 
 pull:
-	docker pull ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+	docker-compose push ${REPOSITORY}
 
 build:
 	docker buildx bake --load
 
 push:
-	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+	docker-compose push ${REPOSITORY}
 
 test: clean up
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose --project-name ${REPOSITORY} run --rm inspec exec tests -t docker://${REPOSITORY}_test_1
+	docker-compose run --rm inspec exec tests -t docker://${REPOSITORY}_${REPOSITORY}_1
 
 clean:
 	docker-compose down --volumes --remove-orphans
-	docker-compose --project-name ${REPOSITORY} down --volumes
 
 up:
-	docker-compose --project-name ${REPOSITORY} up --build -d test
+	docker-compose up -d ${REPOSITORY}
 
 ps:
-	docker-compose --project-name ${REPOSITORY} ps
+	docker-compose ps
 
 logs:
-	docker-compose --project-name ${REPOSITORY} logs -f test auth-proxy
-
-debug:
-	docker-compose --project-name ${REPOSITORY} run test ls /share/tests/files
+	docker-compose logs -f ${REPOSITORY} auth-proxy
 
 enter:
-	docker-compose --project-name ${REPOSITORY} exec test bash
+	docker-compose exec ${REPOSITORY} bash
