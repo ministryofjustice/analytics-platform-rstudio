@@ -17,10 +17,6 @@ control 'PATH variable' do
     its('content') { should eq nil }
   end
 
-  describe os_env('R_VERSION') do
-    its('content') { should match '4.0'}
-  end
-
   describe os_env('AWS_DEFAULT_REGION') do
     its('content') { should eq 'eu-west-1'}
   end
