@@ -7,6 +7,6 @@ control 'R Version' do
   tag 'r'
 
   describe command('r --version') do
-    its('stdout') { should match /GNU R Version 4.0./ }
+    its('stdout') { should match /GNU R Version 4.0/ }
   end
 end
