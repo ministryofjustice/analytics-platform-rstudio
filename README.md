@@ -44,3 +44,5 @@ There are a couple of consequences of using uid 1001:
 * **affects other tools** - The [Jupyter image also has to use 1001 and do the chown](https://github.com/ministryofjustice/analytics-platform-jupyter-notebook/blob/95c830dd6ff726c7831a227a247fd6cc869d8dee/datascience-notebook/Dockerfile#L20-L22), because it shares the home directory.
 
 So maybe we could switch to just using the rstudio/1000 user?
+
+###
