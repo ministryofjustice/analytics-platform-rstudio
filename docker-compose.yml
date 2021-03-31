@@ -10,19 +10,17 @@ services:
     volumes: [tests:/tests]
 
   auth-proxy:
-    image: quay.io/mojanalytics/auth-proxy:v5.2.6
+    image: ${REGISTRY}/nginx-proxy:0.0.1
     ports: [3000:3000]
     environment:
-      USER: ${GITHUB_USER:-rstudio}
-      TARGET_URL: http://rstudio:8787
-      AUTH0_CALLBACK_URL: http://localhost:3000/callback
+      APP_HOST: "rstudio"
+      APP_PORT: "8787"
+      AUTH0_TENANT_DOMAIN: ${AUTH0_TENANT_DOMAIN}
       AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
       AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
-      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
-      COOKIE_MAXAGE: "28800"
-      COOKIE_SECRET: ${COOKIE_SECRET}
-      RSTUDIO_ADD_SECURE_COOKIE: "true"
-      RSTUDIO_SECURE_COOKIE_KEY: "8865825c306d4bd1a90c505dcde189fb"
+      LOGOUT_URL: ${LOGOUT_URL}
+      LISTEN_PORT: "3000"
+      USERNAME: ${USERNAME}
 
   rstudio:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
@@ -30,7 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile
       network: ${NETWORK:-default}
-    ports: [8787:8787]
+    ports: [8787]
     network_mode: ${NETWORK:-default}
     volumes: [tests:/share/tests:ro]
     depends_on: [auth-proxy]
