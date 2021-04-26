@@ -11,11 +11,11 @@ export CHEF_LICENSE=accept-no-persist
 pull:
 	docker-compose pull
 
-build:
-	docker buildx bake --load
-
 push:
-	docker-compose push ${REPOSITORY}
+	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+
+build:
+	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} nginx-proxy
 
 test: up
 	echo Testing Container Version: ${IMAGE_TAG}
