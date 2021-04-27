@@ -1,5 +1,5 @@
 SHELL = '/bin/bash'
-export IMAGE_TAG ?= 4.0.4-1
+export IMAGE_TAG ?= 4.0.5-1
 export DOCKER_BUILDKIT?=1
 export REPOSITORY?=rstudio
 export REGISTRY?=593291632749.dkr.ecr.eu-west-1.amazonaws.com
