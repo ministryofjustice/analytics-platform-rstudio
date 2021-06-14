@@ -32,3 +32,5 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 
 RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch \
   && cp /rocker_scripts/userconf.sh /etc/cont-init.d/userconf
+
+run echo "AWS_WEB_IDENTITY_TOKEN_FILE=/var/run/secrets/eks.amazonaws.com/serviceaccount/token >> /usr/local/lib/R/etc/Renviron"
