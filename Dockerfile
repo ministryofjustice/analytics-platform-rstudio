@@ -33,6 +33,6 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch \
   && cp /rocker_scripts/userconf.sh /etc/cont-init.d/userconf
 
-RUN echo "export AWS_WEB_IDENTITY_TOKEN_FILE=/var/run/secrets/eks.amazonaws.com/serviceaccount/token" >> /etc/environment
-RUN echo "export AWS_ROLE_ARN=arn:aws:iam::525294151996:role/dev_user_andylightfoot" >> /etc/environment
-RUN echo "export AWS_REGION=eu-west-1" >> /etc/environment
+RUN echo "AWS_WEB_IDENTITY_TOKEN_FILE=/var/run/secrets/eks.amazonaws.com/serviceaccount/token" >> /usr/local/lib/R/etc/Renviron
+RUN echo "AWS_ROLE_ARN=arn:aws:iam::525294151996:role/dev_user_andylightfoot" >> /usr/local/lib/R/etc/Renviron
+RUN echo "AWS_REGION=eu-west-1" >> /usr/local/lib/R/etc/Renviron
