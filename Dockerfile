@@ -13,6 +13,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
   && apt-get update && apt-get install -y \
+  curl \
   nano \
   python3 \
   python3-pip \
