@@ -34,3 +34,5 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 
 RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch \
   && cp /rocker_scripts/userconf.sh /etc/cont-init.d/userconf
+
+RUN sed -i 's/#\*               soft    core            0/@staff               hard    core            0\n@staff               soft    core            0/' /etc/security/limits.conf
