@@ -34,3 +34,5 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 
 RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch \
   && cp /rocker_scripts/userconf.sh /etc/cont-init.d/userconf
+
+RUN sed -i 's/#   2 if daemon could not be started/#   2 if daemon could not be started\n        ulimit -S -c 0/' /etc/init.d/rstudio-server
