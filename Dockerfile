@@ -35,4 +35,4 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 RUN patch -u /rocker_scripts/userconf.sh -i /userconf.patch \
   && cp /rocker_scripts/userconf.sh /etc/cont-init.d/userconf
 
-RUN echo '\nulimit -S -c 0" >> /etc/profile
+RUN echo '\nulimit -S -c 0' >> /etc/profile
