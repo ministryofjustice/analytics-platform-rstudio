@@ -21,6 +21,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   python3-pandas \
   libxml2-dev \
   libgdal-dev \
+  libglpk-dev \
   libudunits2-dev \
   libgeos-dev \
   libproj-dev \
