@@ -23,6 +23,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libgdal-dev \
   libglpk-dev \
   libudunits2-dev \
+  libpoppler-cpp-dev \
   libgeos-dev \
   libproj-dev \
   openssh-client \
