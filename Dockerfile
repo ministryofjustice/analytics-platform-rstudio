@@ -28,6 +28,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libgeos-dev \
   libproj-dev \
   openssh-client \
+  libfontconfig1-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
