@@ -10,7 +10,7 @@ services:
     volumes: [tests:/tests]
 
   auth-proxy:
-    image: quay.io/mojanalytics/auth-proxy:v5.2.6
+    image: ${REGISTRY}/auth-proxy:v5.2.9
     ports: [3000:3000]
     environment:
       USER: ${GITHUB_USER:-rstudio}
