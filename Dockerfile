@@ -30,6 +30,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   openssh-client \
   libfontconfig1-dev \
   libnlopt-dev \
+  cmake \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
