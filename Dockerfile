@@ -33,7 +33,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   cmake \
   libharfbuzz-dev \
   libfribidi-dev \
-  libgit2 \
+  libgit2-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
