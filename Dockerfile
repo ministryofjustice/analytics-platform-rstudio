@@ -31,6 +31,8 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libfontconfig1-dev \
   libnlopt-dev \
   cmake \
+  libharfbuzz-dev \
+  libfribidi-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
