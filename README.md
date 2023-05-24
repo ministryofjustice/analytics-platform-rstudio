@@ -29,7 +29,7 @@ make up
 ## Design discussion
 
 * Rocker is the standard Docker image for R
-  * We choose "verse" variant (because we want TinyTeX)
+* We choose "verse" variant (because we want TinyTeX)
 * Install Conda, because that is our recommended package manager
 * Install a few system packages needed by analysts, which really can't be installed by user with Conda (minimize these as they bloat everyone)
 
