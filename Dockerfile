@@ -34,6 +34,8 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libharfbuzz-dev \
   libfribidi-dev \
   libgit2-dev \
+  ca-certificates-java \
+  openjdk-8-jdk \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
