@@ -22,7 +22,7 @@ test: up
 	docker-compose build --no-cache test_files
 	docker-compose up -d test_files
 	docker-compose run --rm inspec check tests
-	docker-compose run --rm inspec exec tests -t docker://analytics-platform-${REPOSITORY}_${REPOSITORY}_1
+	docker-compose run --rm inspec exec tests -t docker://analytics-platform-${REPOSITORY}-${REPOSITORY}-1
 
 clean:
 	docker-compose down --volumes --remove-orphans
