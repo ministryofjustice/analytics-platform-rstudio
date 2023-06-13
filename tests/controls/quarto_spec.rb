@@ -22,7 +22,7 @@ control 'Quarto check' do
 
   describe command('quarto check') do
     its('stderr') { should match /Pandoc version ([0-9\.:]+) OK/ }
-    its('stderr') { should match /Dart Sass ([0-9\.:]+) OK/ }
+    its('stderr') { should match /Dart Sass version ([0-9\.:]+) OK/ }
     its('stderr') { should match /quarto dependencies([\.]+)OK/ }
     its('stderr') { should match /Quarto installation([\.]+)OK/ }
     its('stderr') { should match /markdown render([\.]+)OK/ }
