@@ -21,13 +21,13 @@ control 'Quarto check' do
   tag 'quarto'
 
   describe command('quarto check') do
-    its('stdout') { should match /Pandoc OK/ }
-    its('stdout') { should match /Dart Sass OK/ }
-    its('stdout') { should match /quarto dependencies OK/ }
-    its('stdout') { should match /Quarto installation OK/ }
-    its('stdout') { should match /markdown render OK/ }
-    its('stdout') { should match /Python 3 installation OK/ }
-    its('stdout') { should match /R installation OK/ }
+    its('stderr') { should match /Pandoc OK/ }
+    its('stderr') { should match /Dart Sass OK/ }
+    its('stderr') { should match /quarto dependencies OK/ }
+    its('stderr') { should match /Quarto installation OK/ }
+    its('stderr') { should match /markdown render OK/ }
+    its('stderr') { should match /Python 3 installation OK/ }
+    its('stderr') { should match /R installation OK/ }
     its('stdout') { should eq '' }
     its('stderr') { should eq '' }
     its('exit_status') { should eq 0 }
