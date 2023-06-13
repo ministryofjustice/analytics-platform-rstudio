@@ -21,7 +21,6 @@ control 'Quarto check' do
   tag 'quarto'
 
   describe command('quarto check') do
-    its('exit_status') { should eq 0 }
     its('stdout') { should match /Pandoc OK/ }
     its('stdout') { should match /Dart Sass OK/ }
     its('stdout') { should match /quarto dependencies OK/ }
@@ -29,5 +28,8 @@ control 'Quarto check' do
     its('stdout') { should match /markdown render OK/ }
     its('stdout') { should match /Python 3 installation OK/ }
     its('stdout') { should match /R installation OK/ }
+    its('stdout') { should eq '' }
+    its('stderr') { should eq '' }
+    its('exit_status') { should eq 0 }
   end
 end
