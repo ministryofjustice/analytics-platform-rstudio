@@ -36,6 +36,9 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   libgit2-dev \
   ca-certificates-java \
   openjdk-8-jdk \
+  pandoc \
+  pandoc-citeproc \
+  gdebi-core \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
