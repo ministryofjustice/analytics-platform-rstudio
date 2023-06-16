@@ -9,6 +9,8 @@ ENV LC_ALL="en_GB.UTF-8" \
   DISABLE_AUTH="true" \
   EDITOR="nano"
 
+ENV QUARTO_VERSION="1.3.361"
+
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
