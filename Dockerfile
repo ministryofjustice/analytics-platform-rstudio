@@ -49,7 +49,6 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
-
 RUN patch -u /etc/cont-init.d/02_userconf -i /userconf.patch
 RUN rm -f /etc/cont-init.d/02_userconf.orig
 
