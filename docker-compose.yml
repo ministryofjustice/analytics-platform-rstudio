@@ -10,7 +10,7 @@ services:
     volumes: [tests:/tests]
 
   auth-proxy:
-    image: ${REGISTRY}/auth-proxy:v5.3.3
+    image: ${REGISTRY}/auth-proxy:v5.5.0
     ports: [3000:3000]
     environment:
       USER: ${GITHUB_USER:-rstudio}
