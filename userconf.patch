@@ -1,10 +1,11 @@
---- /rocker_scripts/init_userconf.sh	2022-09-27 14:52:45.000000000 +0100
-+++ /rocker_scripts/init_userconf.sh	2022-09-27 14:52:53.000000000 +0100
-@@ -64,7 +64,7 @@
+--- /rocker_scripts/init_userconf.sh            2024-03-13 12:05:08.000000000 +0000
++++ /rocker_scripts/init_userconf.sh.patch      2024-04-08 12:47:09.566310006 +0000
+@@ -171,7 +171,7 @@
      usermod -l "$USER" -d /home/"$USER" "$DEFAULT_USER"
      groupmod -n "$USER" "$DEFAULT_USER"
      usermod -a -G staff "$USER"
--    chown -R "$USER":"$USER" /home/"$USER"
-+    # chown -R "$USER":"$USER" /home/"$USER"
+-    chown -R "$USER":"$USER" "${USERHOME}"
++    # chown -R "$USER":"$USER" "${USERHOME}"
      echo "USER is now $USER"
  fi
+ 
