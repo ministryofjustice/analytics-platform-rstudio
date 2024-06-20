@@ -1,4 +1,4 @@
-FROM rocker/rstudio:4.4.0
+FROM rocker/rstudio:4.4.1
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
