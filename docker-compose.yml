@@ -9,20 +9,22 @@ services:
       network: ${NETWORK:-default}
     volumes: [tests:/tests]
 
-  auth-proxy:
-    image: ${REGISTRY}/auth-proxy:v5.8.0
-    ports: [3000:3000]
+  nginx-proxy:
+    image: ${REGISTRY}/nginx-proxy:0.2.0
+    ports: [80:3000]
+    build:
+      network: ${NETWORK:-default}
+      context: nginx-proxy
     environment:
-      USER: ${GITHUB_USER:-rstudio}
-      TARGET_URL: http://rstudio:8787
-      AUTH0_CALLBACK_URL: http://localhost:3000/callback
+      APP_PORT: "8787"
+      APP_HOST: "rstudio"
+      AUTH0_TENANT_DOMAIN: ${AUTH0_TENANT_DOMAIN}
       AUTH0_CLIENT_ID: ${AUTH0_CLIENT_ID}
       AUTH0_CLIENT_SECRET: ${AUTH0_CLIENT_SECRET}
-      AUTH0_DOMAIN: ${AUTH0_DOMAIN}
-      COOKIE_MAXAGE: "28800"
-      COOKIE_SECRET: ${COOKIE_SECRET}
-      RSTUDIO_ADD_SECURE_COOKIE: "true"
-      RSTUDIO_SECURE_COOKIE_KEY: "8865825c306d4bd1a90c505dcde189fb"
+      LOGOUT_URL: ${LOGOUT_URL}
+      USERNAME: ${USERNAME}
+      REDIRECT_DOMAIN: "tools.alpha.mojanalytics.xyz"
+      ANALYTICAL_PLATFORM_TOOL: "rstudio"
 
   rstudio:
     image: ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
@@ -33,7 +35,7 @@ services:
     ports: [8787:8787]
     network_mode: ${NETWORK:-default}
     volumes: [tests:/share/tests:ro]
-    depends_on: [auth-proxy]
+    depends_on: [nginx-proxy]
     environment:
       SECURE_COOKIE_KEY: "8865825c306d4bd1a90c505dcde189fb"
       AWS_DEFAULT_REGION: "eu-west-1"

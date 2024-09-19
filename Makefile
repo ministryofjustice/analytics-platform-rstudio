@@ -28,13 +28,13 @@ clean:
 	docker-compose down --volumes --remove-orphans
 
 up:
-	docker-compose up -d rstudio auth-proxy
+	docker-compose up -d rstudio nginx-proxy
 
 ps:
 	docker-compose ps
 
 logs:
-	docker-compose logs -f ${REPOSITORY} auth-proxy
+	docker-compose logs -f ${REPOSITORY} nginx-proxy
 
 enter:
 	docker-compose exec inspec bash
