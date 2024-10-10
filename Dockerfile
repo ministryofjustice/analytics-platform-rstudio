@@ -42,6 +42,7 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   pandoc-citeproc \
   gdebi-core \
   libcairo2-dev \
+  libgsl-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
