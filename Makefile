@@ -9,7 +9,7 @@ export CHEF_LICENSE=accept-no-persist
 .PHONY: build test pull push inspec up clean ps
 
 pull:
-	docker-compose pull
+	docker compose pull
 
 push:
 	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
@@ -19,22 +19,22 @@ build:
 
 test: up
 	echo Testing Container Version: ${IMAGE_TAG}
-	docker-compose build --no-cache test_files
-	docker-compose up -d test_files
-	docker-compose run --rm inspec check tests
-	docker-compose run --rm inspec exec tests -t docker://analytics-platform-${REPOSITORY}-${REPOSITORY}-1
+	docker compose build --no-cache test_files
+	docker compose up -d test_files
+	docker compose run --rm inspec check tests
+	docker compose run --rm inspec exec tests -t docker://analytics-platform-${REPOSITORY}-${REPOSITORY}-1
 
 clean:
-	docker-compose down --volumes --remove-orphans
+	docker compose down --volumes --remove-orphans
 
 up:
-	docker-compose up -d rstudio nginx-proxy
+	docker compose up -d rstudio nginx-proxy
 
 ps:
-	docker-compose ps
+	docker compose ps
 
 logs:
-	docker-compose logs -f ${REPOSITORY} nginx-proxy
+	docker compose logs -f ${REPOSITORY} nginx-proxy
 
 enter:
-	docker-compose exec inspec bash
+	docker compose exec inspec bash

@@ -1,4 +1,5 @@
 #!/usr/bin/with-contenv bash
+# shellcheck shell=bash
 
 # Set secure cookie key so that auth-proxy can pass in the correct cookie
 # See load-balancing docs for more inforamtion
