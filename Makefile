@@ -2,7 +2,7 @@ SHELL = '/bin/bash'
 export IMAGE_TAG ?= 4.1.2-5
 export DOCKER_BUILDKIT?=1
 export REPOSITORY?=rstudio
-export REGISTRY?=ghcr.io/ministryofjustice/rstudio
+export REGISTRY?=ghcr.io/analytics-platform-rstudio
 export NETWORK?=default
 export CHEF_LICENSE=accept-no-persist
 
