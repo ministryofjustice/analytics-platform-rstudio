@@ -12,10 +12,12 @@ pull:
 	docker compose pull
 
 push:
-	docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+	#docker push ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG}
+	docker push ${REGISTRY}${IMAGE_TAG}
 
 build:
-	docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
+	#docker build --network=${NETWORK} -t ${REGISTRY}/${REPOSITORY}:${IMAGE_TAG} .
+	docker build --network=${NETWORK} -t ${REGISTRY}:${IMAGE_TAG} .
 
 test: up
 	echo Testing Container Version: ${IMAGE_TAG}
