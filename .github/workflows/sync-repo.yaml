@@ -1,10 +1,12 @@
-# checkov:skip=CKV2_GHA_1: This is an IAM issue not sure why it is triggered
 ---
 name: Repo Sync
 
 "on":
   push:
     branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   repo-sync:
