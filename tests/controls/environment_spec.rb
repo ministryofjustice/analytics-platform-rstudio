@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 "Environment Variables"
 
 control "PATH variable" do
