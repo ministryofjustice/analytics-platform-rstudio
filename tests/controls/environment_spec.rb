@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-"Environment Variables"
+title "Environment Variables"
 
 control "PATH variable" do
   impact "high"

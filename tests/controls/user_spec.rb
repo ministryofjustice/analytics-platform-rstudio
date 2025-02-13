@@ -27,6 +27,6 @@ control "Common Groups" do
 
   describe user("rstudio") do
     its("gid") { should eq 1000 }
-    its("groups") { should eq ["rstudio","staff"]}
+    its("groups") { should eq ["rstudio", "staff"] }
   end
 end
