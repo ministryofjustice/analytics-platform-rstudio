@@ -11,7 +11,7 @@ permissions:
 jobs:
   repo-sync:
     name: Repo Sync
-    if: ${{ github.repository }} == 'analytics-platform-rstudio'
+    if: ${{ github.repository  == 'analytics-platform-rstudio' }}
     runs-on: ubuntu-latest
     steps:
       - name: Sync main branch to public fork
