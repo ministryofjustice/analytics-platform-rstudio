@@ -1,1 +1,1 @@
-spark.read_parquet()  # type: ignore
+spark.read_parquet()

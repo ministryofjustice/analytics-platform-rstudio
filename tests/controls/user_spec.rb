@@ -15,7 +15,7 @@ control "Common Users" do
   end
 
   describe user(1001) do
-    it { should_not exist}
+    it { should_not exist }
   end
 end
 
