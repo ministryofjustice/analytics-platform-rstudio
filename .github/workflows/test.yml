@@ -23,11 +23,18 @@ jobs:
         id: setup_container_structure_test
         uses: ministryofjustice/github-actions/setup-container-structure-test@ccf9e3a4a828df1ec741f6c8e6ed9d0acaef3490 # v18.5.0
 
+      - name: Build
+        id: build
+        shell: bash
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          SECURE_COOKIE_KEY: ${{ secrets.SECURE_COOKIE_KEY }}
+        run: make build
+        
       - name: Test
         id: test
         shell: bash
         env:
           IMAGE_TAG: ${{ github.sha }}
           SECURE_COOKIE_KEY: ${{ secrets.SECURE_COOKIE_KEY }}
-        run: |
-          make test
+        run: make clean && make test
