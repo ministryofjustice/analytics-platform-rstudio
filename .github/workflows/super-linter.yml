@@ -37,3 +37,4 @@ jobs:
           VALIDATE_PYTHON_RUFF: false
           VALIDATE_PYTHON_BLACK: false
           VALIDATE_PYTHON_FLAKE8: false
+          VALIDATE_RUBY: false
