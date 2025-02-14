@@ -37,7 +37,7 @@ services:
     volumes: [tests:/share/tests:ro]
     depends_on: [nginx-proxy]
     environment:
-      SECURE_COOKIE_KEY: "8865825c306d4bd1a90c505dcde189fb"
+      SECURE_COOKIE_KEY: ${SECURE_COOKIE_KEY}
       AWS_DEFAULT_REGION: "eu-west-1"
 
   inspec:

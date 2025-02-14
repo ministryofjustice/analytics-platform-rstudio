@@ -28,5 +28,6 @@ jobs:
         shell: bash
         env:
           IMAGE_TAG: ${{ github.sha }}
+          SECURE_COOKIE_KEY: ${{ secrets.SECURE_COOKIE_KEY }}
         run: |
           make test
