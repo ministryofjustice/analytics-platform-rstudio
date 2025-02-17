@@ -8,16 +8,16 @@ name: RStudio Build & Test
     tags: ["*"]
 
 jobs:
-  # yamllint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out code
-  #       uses: actions/checkout@main
-  #     - name: Run yaml Lint
-  #       uses: actionshub/yamllint@main
+  yamllint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code
+        uses: actions/checkout@main
+      - name: Run yaml Lint
+        uses: actionshub/yamllint@main
 
   mdl:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Check out code
         uses: actions/checkout@main
@@ -26,7 +26,7 @@ jobs:
 
   docker:
     if: ${{ github.repository }} == 'analytics-platform-rstudio'
-    runs-on: [ubuntu-latest]
+    runs-on: [self-hosted, management-ecr]
     env:
       REPOSITORY: rstudio
       ECR_REPOSITORY: rstudio
