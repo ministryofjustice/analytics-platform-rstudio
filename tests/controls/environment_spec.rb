@@ -1,23 +1,25 @@
-'Environment Variables'
+# frozen_string_literal: true
 
-control 'PATH variable' do
-  impact 'high'
-  title 'PATH should contain ~/.local/bin for nbstripout'
-  desc 'PATH should contain ~/.local/bin for nbstripout. This is currently broken,' \
-  'however the fix would be to change the '
-  tag 'environment'
-  tag 'nbstripout'
-  tag 'known_broken'
+title "Environment Variables"
 
-  describe os_env('PATH') do
-    its('content') { should_not match %r{/.local/bin} }
+control "PATH variable" do
+  impact "high"
+  title "PATH should contain ~/.local/bin for nbstripout"
+  desc "PATH should contain ~/.local/bin for nbstripout. This is currently broken," \
+  "however the fix would be to change the "
+  tag "environment"
+  tag "nbstripout"
+  tag "known_broken"
+
+  describe os_env("PATH") do
+    its("content") { should_not match %r{/.local/bin} }
   end
 
-  describe os_env('GITHUB_PAT') do
-    its('content') { should eq nil }
+  describe os_env("GITHUB_PAT") do
+    its("content") { should eq nil }
   end
 
-  describe os_env('AWS_DEFAULT_REGION') do
-    its('content') { should eq 'eu-west-1'}
+  describe os_env("AWS_DEFAULT_REGION") do
+    its("content") { should eq "eu-west-1" }
   end
 end

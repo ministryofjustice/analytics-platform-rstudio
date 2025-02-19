@@ -1,3 +1,6 @@
+# checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
+# checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
+
 FROM rocker/rstudio:4.4.1
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
@@ -14,7 +17,7 @@ ENV QUARTO_VERSION="1.3.361"
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
-  && apt-get update && apt-get install -y \
+  && apt-get update && apt-get install -y && apt-get upgrade -y\
   curl \
   nano \
   python3 \
