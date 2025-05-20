@@ -10,7 +10,7 @@ control "Python version" do
   tag "version"
 
   describe command("python --version") do
-    its("stdout") { should match /Python 3.10/ }
+    its("stdout") { should match /Python 3.12/ }
     its("exit_status") { should eq 0 }
   end
 end
