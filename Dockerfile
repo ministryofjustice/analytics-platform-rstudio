@@ -1,7 +1,7 @@
 # checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
 # checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
 
-FROM rocker/rstudio:4.4.1
+FROM rocker/rstudio:4.5.0
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
@@ -42,7 +42,6 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   ca-certificates-java \
   openjdk-8-jdk \
   pandoc \
-  pandoc-citeproc \
   gdebi-core \
   libcairo2-dev \
   libgsl-dev \

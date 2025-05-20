@@ -12,7 +12,7 @@ control "Pip available" do
 
   describe command("pip  --version") do
     its("exit_status") { should eq 0 }
-    its("stdout") { should match /pip 22/ }
+    its("stdout") { should match /pip 24/ }
   end
 end
 
@@ -25,7 +25,12 @@ control "osmnx" do
   tag "installer"
   tag "pip"
 
-  describe command("pip install osmnx") do
+  describe bash("
+    python3 -m venv /tmp/osmnx_venv &&
+    source /tmp/osmnx_venv/bin/activate &&
+    pip install --upgrade pip &&
+    pip install osmnx
+  ") do
     its("exit_status") { should eq 0 }
     its("stdout") { should match /Successfully installed/ }
   end
