@@ -42,7 +42,6 @@ RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   ca-certificates-java \
   openjdk-8-jdk \
   pandoc \
-  pandoc-citeproc \
   gdebi-core \
   libcairo2-dev \
   libgsl-dev \
