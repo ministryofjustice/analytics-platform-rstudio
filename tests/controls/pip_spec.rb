@@ -26,6 +26,7 @@ control "osmnx" do
   tag "pip"
 
   describe bash("
+    rm -rf /tmp/osmnx_venv &&
     python3 -m venv /tmp/osmnx_venv &&
     source /tmp/osmnx_venv/bin/activate &&
     pip install --upgrade pip &&
