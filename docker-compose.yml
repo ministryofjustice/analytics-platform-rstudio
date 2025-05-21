@@ -36,7 +36,7 @@ services:
     depends_on: [nginx-proxy]
     environment:
       SECURE_COOKIE_KEY: "8865825c306d4bd1a90c505dcde189fb" # gitleaks:allow
-      AWS_DEFAULT_REGION: "eu-north-1"
+      AWS_DEFAULT_REGION: "eu-west-1"
 
   inspec:
     image: chef/inspec:current
