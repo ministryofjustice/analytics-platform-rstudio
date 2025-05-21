@@ -20,6 +20,6 @@ control "PATH variable" do
   end
 
   describe os_env("AWS_DEFAULT_REGION") do
-    its("content") { should eq "eu-west-1" }
+    its("content") { should eq "eu-north-1" }
   end
 end
