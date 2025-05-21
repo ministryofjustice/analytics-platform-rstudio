@@ -20,4 +20,9 @@ else
     exit 1
 fi
 
-exec "$@"
+if [ "$#" -eq 0 ]; then
+	echo "No command provided. Keeping the container running..."
+	tail -f /dev/null
+else
+	exec "$@"
+fi
