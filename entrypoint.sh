@@ -12,7 +12,10 @@ fi
 
 echo "[entrypoint] About to run default_user.sh..."
 if [ -x /rocker_scripts/default_user.sh ]; then
-	/rocker_scripts/default_user.sh || { echo "[entrypoint] default_user.sh failed!"; exit 1; }
+	/rocker_scripts/default_user.sh || {
+		echo "[entrypoint] default_user.sh failed!"
+		exit 1
+	}
 	echo "[entrypoint] default_user.sh completed."
 else
 	echo "[entrypoint] ERROR: default_user.sh not found or not executable" >&2
