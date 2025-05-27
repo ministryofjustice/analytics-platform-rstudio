@@ -5,7 +5,7 @@ FROM rocker/rstudio:4.5.0
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
-COPY userconf.patch /userconf.patch
+COPY default_user.patch /tmp/default_user.patch
 
 ENV LC_ALL="en_GB.UTF-8" \
   LANG="en_GB.UTF-8" \
@@ -55,8 +55,7 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
 RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb
 RUN gdebi --non-interactive quarto-${QUARTO_VERSION}-linux-amd64.deb
 
-RUN patch -u /etc/cont-init.d/02_userconf -i /userconf.patch
-RUN rm -f /etc/cont-init.d/02_userconf.orig
+RUN patch /rocker_scripts/default_user.sh /tmp/default_user.patch
 
 RUN echo '\nulimit -S -c 0' >> /etc/profile
 
