@@ -7,6 +7,10 @@ LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
 COPY userconf.patch /userconf.patch
 
+# tempt copy for debugging
+COPY default_user.sh /rocker_scripts/default_user.sh
+RUN chmod +x /rocker_scripts/default_user.sh
+
 ENV LC_ALL="en_GB.UTF-8" \
   LANG="en_GB.UTF-8" \
   DISABLE_AUTH="true" \
