@@ -21,9 +21,9 @@ else
     "reuse_sessions_for_project_links": true,
     "posix_terminal_shell": "bash"
 }
-# EOF
-#     chown -R "${DEFAULT_USER}:${DEFAULT_USER}" "/home/${DEFAULT_USER}"
-# fi
+EOF
+    # chown -R "${DEFAULT_USER}:${DEFAULT_USER}" "/home/${DEFAULT_USER}"
+fi
 
 # If shiny server installed, make the user part of the shiny group
 if [ -x "$(command -v shiny-server)" ]; then
