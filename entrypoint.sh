@@ -19,4 +19,13 @@ else
 fi
 
 # Start s6 to run init scripts (including secure-cookie-key-conf)
-/init
+echo "Checking for /init..."
+
+if [ -x /init ]; then
+    echo "/init found and executable. Starting s6..."
+    /init
+else
+    echo "ERROR: /init not found or not executable" >&2
+    ls -l /init || echo "/init does not exist"
+    exit 1
+fi
