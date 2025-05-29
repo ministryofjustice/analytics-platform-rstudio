@@ -12,7 +12,7 @@ control "Quarto available" do
 
   describe command("quarto  --version") do
     its("exit_status") { should eq 0 }
-    its("stdout") { should match /1.3/ }
+    its("stdout") { should match /1.7/ }
   end
 end
 
