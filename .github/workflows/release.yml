@@ -65,7 +65,7 @@ jobs:
           push-to-registry: true
 
       - name: Attest SBOM
-        uses: actions/attest-sbom@5026d3663739160db546203eeaffa6aa1c51a4d6 # v1.4.1
+        uses: actions/attest-sbom@bd218ad0dbcb3e146bd073d1d9c6d78e08aa8a0b # v2.4.0
         id: attest_sbom
         with:
           subject-name: ghcr.io/${{ github.repository }}
