@@ -50,7 +50,7 @@ jobs:
 
       - name: Generate SBOM
         id: generate_sbom
-        uses: anchore/sbom-action@55dc4ee22412511ee8c3142cbea40418e6cec693 # v0.17.8
+        uses: anchore/sbom-action@9246b90769f852b3a8921f330c59e0b3f439d6e9 # v0.20.1
         with:
           image: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           format: cyclonedx-json
