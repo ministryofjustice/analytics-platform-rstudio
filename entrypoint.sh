@@ -22,6 +22,10 @@ else
 	exit 1
 fi
 
+printf 'server-user=%s\nauth-none=1\n' "$DEFAULT_USER" > /etc/rstudio/rserver.conf
+mkdir -p "/home/$DEFAULT_USER/.config"
+chown -R "$DEFAULT_USER:$DEFAULT_USER" "/home/$DEFAULT_USER/.config"
+
 echo "[entrypoint] Checking for /init..."
 if [ -x /init ]; then
 	echo "[entrypoint] /init found and executable. Starting s6..."
