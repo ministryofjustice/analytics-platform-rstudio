@@ -22,7 +22,11 @@ else
 	exit 1
 fi
 
-printf 'server-user=%s\nauth-none=1\n' "$DEFAULT_USER" >/etc/rstudio/rserver.conf
+# ensure rstudio run as default user without auth to avoid root owned file issues
+cat >/etc/rstudio/rserver.conf <<EOF
+server-user=$DEFAULT_USER
+auth-none=1
+EOF
 mkdir -p "/home/$DEFAULT_USER/.config"
 chown -R "$DEFAULT_USER:$DEFAULT_USER" "/home/$DEFAULT_USER/.config"
 
