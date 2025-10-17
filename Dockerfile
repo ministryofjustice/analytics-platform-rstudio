@@ -52,8 +52,9 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   command -v python &&\
   command -v pip
 
-RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-amd64.deb
-RUN gdebi --non-interactive quarto-${QUARTO_VERSION}-linux-amd64.deb
+ARG TARGETARCH
+RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${TARGETARCH}.deb \
+ && gdebi --non-interactive quarto-${QUARTO_VERSION}-linux-${TARGETARCH}.deb
 
 RUN patch /rocker_scripts/default_user.sh /tmp/default_user.patch
 
