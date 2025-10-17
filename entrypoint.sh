@@ -22,6 +22,14 @@ else
 	exit 1
 fi
 
+# ensure rstudio run as default user without auth to avoid root owned file issues
+cat >/etc/rstudio/rserver.conf <<EOF
+server-user=$DEFAULT_USER
+auth-none=1
+EOF
+mkdir -p "/home/$DEFAULT_USER/.config"
+chown -R "$DEFAULT_USER:$DEFAULT_USER" "/home/$DEFAULT_USER/.config"
+
 echo "[entrypoint] Checking for /init..."
 if [ -x /init ]; then
 	echo "[entrypoint] /init found and executable. Starting s6..."
