@@ -1,7 +1,7 @@
 # checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
 # checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
 
-FROM rocker/rstudio:4.5.0
+FROM rocker/rstudio:4.5.1
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
