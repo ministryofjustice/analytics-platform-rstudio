@@ -1,28 +1,26 @@
---- default_user.sh.orig	2025-05-27 11:57:54
-+++ default_user.sh	2025-05-27 11:58:31
-@@ -1,5 +1,6 @@
- #!/bin/bash
- set -e
-+set -x
+--- default_user.sh.orig	2025-11-06 12:22:24
++++ default_user.sh	2025-11-06 12:52:04
+@@ -13,7 +13,9 @@
  
- DEFAULT_USER=${1:-${DEFAULT_USER:-"rstudio"}}
- 
-@@ -21,7 +22,10 @@
+     ## Rocker's default RStudio settings, for better reproducibility
+     mkdir -p "/home/${DEFAULT_USER}/.config/rstudio/"
+-    cat <<EOF >"/home/${DEFAULT_USER}/.config/rstudio/rstudio-prefs.json"
++    prefs="/home/${DEFAULT_USER}/.config/rstudio/rstudio-prefs.json"
++    if [ ! -f "$prefs" ]; then
++    cat <<EOF >"$prefs"
+ {
+     "save_workspace": "never",
+     "always_save_history": false,
+@@ -21,7 +23,11 @@
      "posix_terminal_shell": "bash"
  }
  EOF
 -    chown -R "${DEFAULT_USER}:${DEFAULT_USER}" "/home/${DEFAULT_USER}"
++    fi
 +    # This chown command is not necessary and results in the container taking too long to start.
-+    # Commented out rather than removed to explain the reasoning. For furher details, see:
++    # Commented out rather than removed to explain the reasoning. For further details, see:
 +    # https://github.com/rocker-org/rocker-versioned2/pull/891
 +    # chown -R "${DEFAULT_USER}:${DEFAULT_USER}" "/home/${DEFAULT_USER}"
  fi
  
  # If shiny server installed, make the user part of the shiny group
-@@ -33,4 +37,4 @@
- if [ -x "$(command -v git)" ]; then
-     git config --system credential.helper 'cache --timeout=3600'
-     git config --system push.default simple
--fi
-+fi
-\ No newline at end of file
