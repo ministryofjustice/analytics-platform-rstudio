@@ -29,7 +29,7 @@ jobs:
 
       - name: Super-Linter
         id: super_linter
-        uses: super-linter/super-linter/slim@e1cb86b6e8d119f789513668b4b30bf17fe1efe4 # v7.2.0
+        uses: super-linter/super-linter/slim@2bdd90ed3262e023ac84bf8fe35dc480721fc1f2 # v8.2.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_PYTHON_MYPY: false
