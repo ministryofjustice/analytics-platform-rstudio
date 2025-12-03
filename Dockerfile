@@ -4,6 +4,9 @@
 FROM rocker/rstudio:4.5.2
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
+# set default CRAN
+ENV CRAN="https://p3m.dev/cran/__linux__/noble/latest"
+
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
 COPY default_user.patch /tmp/default_user.patch
 
