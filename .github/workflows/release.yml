@@ -55,7 +55,7 @@ jobs:
           image: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
           format: cyclonedx-json
           output-file: "sbom.cyclonedx.json"
-          syft-version: v1.19.1
+          syft-version: v1.19.0
 
       - name: Attest
         uses: actions/attest-build-provenance@ef244123eb79f2f7a7e75d99086184180e6d0018 # v1.4.4
