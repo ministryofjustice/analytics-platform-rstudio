@@ -1,13 +1,3 @@
-# Ubuntu
-#CVE-2024-53103
-#CVE-2024-26928 
-#CVE-2024-35864
-#CVE-2024-56658
-# 22.04 is not on the list of affected software for the following alert
-#CVE-2022-0995 
 # Kernel CVE flagged via linux-libc-dev headers; not exploitable in container.
 # Revisit once Canonical marks CVE as fixed/not-affected in ubuntu:noble advisories.
-#CVE-2025-38666
-#CVE-2025-38561
-#CVE-2025-39698
-CVE-2025-37899
+CVE-2025-37899 exp:2026-04-30
