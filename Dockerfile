@@ -1,7 +1,7 @@
 # checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
 # checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
 
-FROM rocker/rstudio:4.5.2
+FROM rocker/rstudio:4.6.0
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 # set default CRAN
