@@ -58,9 +58,8 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 10 &&\
   command -v python &&\
   command -v pip
-
+  
 ARG TARGETARCH
-
 # GitHub CLI
 RUN curl --location --fail-with-body \
       "https://cli.github.com/packages/githubcli-archive-keyring.gpg" \
@@ -77,6 +76,7 @@ RUN curl --location --fail-with-body \
     && tar --extract --file copilot.tar.gz \
     && install --owner nobody --group nogroup --mode 0755 copilot /usr/local/bin/copilot \
     && rm -rf copilot.tar.gz copilot
+
 
 RUN curl -LO https://github.com/quarto-dev/quarto-cli/releases/download/v${QUARTO_VERSION}/quarto-${QUARTO_VERSION}-linux-${TARGETARCH}.deb \
  && gdebi --non-interactive quarto-${QUARTO_VERSION}-linux-${TARGETARCH}.deb
