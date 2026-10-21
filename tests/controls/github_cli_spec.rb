@@ -11,7 +11,7 @@ control "GitHub CLI available" do
   tag "version"
 
   describe command("gh --version") do
-    its("stdout") { should match /gh version 2\.101/ }
+    its("stdout") { should match /gh version 2\.202\.1/ }
     its("exit_status") { should eq 0 }
   end
 end
