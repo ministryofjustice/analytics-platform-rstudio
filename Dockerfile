@@ -21,6 +21,8 @@ ENV QUARTO_VERSION="1.11.9" \
     GITHUB_CLI_VERSION="2.103.3" \
     GITHUB_COPILOT_CLI_VERSION="1.0.105"
 
+# Keep Ubuntu packages unpinned so builds receive current security updates.
+# hadolint ignore=DL3008
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
@@ -64,13 +66,14 @@ ARG TARGETARCH
 RUN curl --location --fail-with-body \
       "https://registry.npmjs.org/zod/-/zod-4.6.6.tgz" \
       --output /tmp/zod.tgz \
-    && echo "e149b34141797f1bdf7181e56e30667a353ec3e85b0e7585c78692f24071ee73c11dc3b64aa3dba401bcb276dd83e5ec7b8a5179f47df2182316020c088fd484  /tmp/zod.tgz" | sha512sum --check --strict \
+    && printf '%s\n' "e149b34141797f1bdf7181e56e30667a353ec3e85b0e7585c78692f24071ee73c11dc3b64aa3dba401bcb276dd83e5ec7b8a5179f47df2182316020c088fd484  /tmp/zod.tgz" > /tmp/zod.sha512 \
+    && sha512sum --check --strict /tmp/zod.sha512 \
     && test -f /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod/package.json \
     && python3 -m tarfile --extract /tmp/zod.tgz /tmp/zod --filter data \
     && rm -rf /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
     && mv /tmp/zod/package /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
     && rmdir /tmp/zod \
-    && rm /tmp/zod.tgz
+    && rm /tmp/zod.tgz /tmp/zod.sha512
 
 # GitHub CLI
 RUN curl --location --fail-with-body \

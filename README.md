@@ -9,7 +9,11 @@ This allows the [sensitive CI/CD](https://docs.github.com/en/actions/hosting-you
 
 ## Builds
 
-The docker image is built using GitHub Actions and hosted on an internal ECR repository.
+The Docker image is built using GitHub Actions and hosted on an internal ECR repository.
+
+Ubuntu packages remain unpinned so image builds receive current security updates.
+Dependabot keeps its daily update policy without a release cooldown; these
+intentional policies have rule-specific lint exceptions.
 
 ### RStudio Copilot dependency patch
 

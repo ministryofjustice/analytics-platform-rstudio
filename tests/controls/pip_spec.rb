@@ -19,8 +19,8 @@ end
 control "osmnx" do
   impact "high"
   title "Install osmnx"
-  desc "Data scientists should be able top use osmnx" \
-  " OSMX is often installed, but difficult to install with system pacakges" \
+  desc "Data scientists should be able to use osmnx" \
+  " OSMnx is often installed, but difficult to install with system packages" \
   " and rtree needing installing, which often break without lots of debugging."
   tag "installer"
   tag "pip"
