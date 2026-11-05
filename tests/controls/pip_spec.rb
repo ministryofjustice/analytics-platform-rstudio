@@ -12,7 +12,7 @@ control "Pip available" do
 
   describe command("pip  --version") do
     its("exit_status") { should eq 0 }
-    its("stdout") { should match /pip 24/ }
+    its("stdout") { should match /pip 25/ }
   end
 end
 

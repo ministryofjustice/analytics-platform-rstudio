@@ -1,11 +1,11 @@
 # checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
 # checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
 
-FROM rocker/rstudio:4.6.1
+FROM rocker/rstudio:4.6.2
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 # set default CRAN
-ENV CRAN="https://p3m.dev/cran/__linux__/noble/latest"
+ENV CRAN="https://p3m.dev/cran/__linux__/resolute/latest"
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
 COPY default_user.patch /tmp/default_user.patch
@@ -15,11 +15,11 @@ ENV LC_ALL="en_GB.UTF-8" \
     DISABLE_AUTH="true" \
     EDITOR="nano"
 
-ENV QUARTO_VERSION="1.7.31" \
-    GIT_LFS_VERSION="3.8.0" \
-    GIT_LFS_VERSION_SHA="e455e00f15d9b95661b8d53498ffb0c3367962cf1ec73c31ab7369516cd6ab8d" \
-    GITHUB_CLI_VERSION="2.103.0" \
-    GITHUB_COPILOT_CLI_VERSION="1.0.88"
+ENV QUARTO_VERSION="1.11.9" \
+    GIT_LFS_VERSION="3.8.1" \
+    GIT_LFS_VERSION_SHA="e72cf723a4a660438862282e8aecf3885fc8123e88bfcad534cf6b941a354b75" \
+    GITHUB_CLI_VERSION="2.103.3" \
+    GITHUB_COPILOT_CLI_VERSION="1.0.105"
 
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
