@@ -60,6 +60,18 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   command -v pip
   
 ARG TARGETARCH
+# Patch GHSA-mrhx-c7xc-m3w5 until the RStudio base image bundles a fixed Zod.
+RUN curl --location --fail-with-body \
+      "https://registry.npmjs.org/zod/-/zod-4.6.6.tgz" \
+      --output /tmp/zod.tgz \
+    && echo "e149b34141797f1bdf7181e56e30667a353ec3e85b0e7585c78692f24071ee73c11dc3b64aa3dba401bcb276dd83e5ec7b8a5179f47df2182316020c088fd484  /tmp/zod.tgz" | sha512sum --check --strict \
+    && test -f /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod/package.json \
+    && python3 -m tarfile --extract /tmp/zod.tgz /tmp/zod --filter data \
+    && rm -rf /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
+    && mv /tmp/zod/package /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
+    && rmdir /tmp/zod \
+    && rm /tmp/zod.tgz
+
 # GitHub CLI
 RUN curl --location --fail-with-body \
       "https://cli.github.com/packages/githubcli-archive-keyring.gpg" \

@@ -11,6 +11,19 @@ This allows the [sensitive CI/CD](https://docs.github.com/en/actions/hosting-you
 
 The docker image is built using GitHub Actions and hosted on an internal ECR repository.
 
+### RStudio Copilot dependency patch
+
+The image replaces the Zod package in RStudio's bundled Copilot language server
+with version 4.6.6 to address [GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5).
+The official npm tarball is verified against its SHA-512 integrity before
+installation, without running npm scripts. This does not change the separately
+installed GitHub Copilot CLI or rewrite Zod code inlined in the vendor's JavaScript
+bundle.
+
+Remove this workaround when the upstream base image supplies a fixed dependency.
+The InSpec controls check the installed version, rejection of oversized
+collections before element parsing, and language-server startup.
+
 ## Usage
 
 To add/remove R packages to this image, edit the `R_packages` file accordingly then build the image remembering to
