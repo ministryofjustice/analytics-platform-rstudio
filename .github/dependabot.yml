@@ -2,15 +2,16 @@
 version: 2
 
 updates:
-  - package-ecosystem: "github-actions"
+  # Preserve daily update PRs without a seven-day release cooldown.
+  - package-ecosystem: "github-actions" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "devcontainers"
+  - package-ecosystem: "devcontainers" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "docker"
+  - package-ecosystem: "docker" # zizmor: ignore[dependabot-cooldown]
     directory: "/"
     schedule:
       interval: "daily"

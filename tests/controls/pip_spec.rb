@@ -12,15 +12,15 @@ control "Pip available" do
 
   describe command("pip  --version") do
     its("exit_status") { should eq 0 }
-    its("stdout") { should match /pip 24/ }
+    its("stdout") { should match /pip 25/ }
   end
 end
 
 control "osmnx" do
   impact "high"
   title "Install osmnx"
-  desc "Data scientists should be able top use osmnx" \
-  " OSMX is often installed, but difficult to install with system pacakges" \
+  desc "Data scientists should be able to use osmnx" \
+  " OSMnx is often installed, but difficult to install with system packages" \
   " and rtree needing installing, which often break without lots of debugging."
   tag "installer"
   tag "pip"

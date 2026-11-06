@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 # Set secure cookie key so that auth-proxy can pass in the correct cookie
-# See load-balancing docs for more inforamtion
+# See load-balancing docs for more information
 # https://docs.rstudio.com/ide/server-pro/latest/load-balancing.html
 if [ -z "$SECURE_COOKIE_KEY" ]; then
 	echo "SECURE_COOKIE_KEY not set"

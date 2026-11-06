@@ -1,40 +1,24 @@
 ---
-name: 🦝 Super-Linter
+name: Super Linter
 
-on:
+"on":
   pull_request:
     branches:
       - main
-    types:
-      - edited
-      - opened
-      - reopened
-      - synchronize
 
 permissions: {}
 
 jobs:
   super-linter:
-    name: Super-Linter
-    runs-on: ubuntu-latest
+    name: Super Linter
     permissions:
       contents: read
+      packages: read
       statuses: write
-    steps:
-      - name: Checkout
-        id: checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 0
-
-      - name: Super-Linter
-        id: super_linter
-        uses: super-linter/super-linter/slim@e1cb86b6e8d119f789513668b4b30bf17fe1efe4 # v7.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VALIDATE_PYTHON_MYPY: false
-          VALIDATE_PYTHON_PYLINT: false
-          VALIDATE_PYTHON_RUFF: false
-          VALIDATE_PYTHON_BLACK: false
-          VALIDATE_PYTHON_FLAKE8: false
-          VALIDATE_RUBY: false
+    uses: ministryofjustice/data-platform-github-actions/.github/workflows/super-linter.yml@4d6e492755f0025455f2dadf558a4f942bde560a # v4.3.1
+    with:
+      # FILTER_REGEX_EXCLUDE excludes prompt files - they're for AI consumption, not human documentation
+      super-linter-variables: |
+        {
+          "FILTER_REGEX_EXCLUDE": ".github/prompts/.*"
+        }

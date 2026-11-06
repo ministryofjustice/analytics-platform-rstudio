@@ -1,11 +1,11 @@
 # checkov:skip=CKV_DOCKER_2:Healthcheck instructions have not been added to container images
 # checkov:skip=CKV_DOCKER_3:"Ensure that a user for the container has been created"
 
-FROM rocker/rstudio:4.6.1
+FROM rocker/rstudio:4.6.2
 LABEL maintainer=analytics-platform-tech@digital.justice.gov.uk
 
 # set default CRAN
-ENV CRAN="https://p3m.dev/cran/__linux__/noble/latest"
+ENV CRAN="https://p3m.dev/cran/__linux__/resolute/latest"
 
 COPY secure-cookie-key.sh /etc/cont-init.d/secure-cookie-key-conf
 COPY default_user.patch /tmp/default_user.patch
@@ -15,16 +15,18 @@ ENV LC_ALL="en_GB.UTF-8" \
     DISABLE_AUTH="true" \
     EDITOR="nano"
 
-ENV QUARTO_VERSION="1.7.31" \
-    GIT_LFS_VERSION="3.8.0" \
-    GIT_LFS_VERSION_SHA="e455e00f15d9b95661b8d53498ffb0c3367962cf1ec73c31ab7369516cd6ab8d" \
-    GITHUB_CLI_VERSION="2.103.0" \
-    GITHUB_COPILOT_CLI_VERSION="1.0.88"
+ENV QUARTO_VERSION="1.11.9" \
+    GIT_LFS_VERSION="3.8.1" \
+    GIT_LFS_VERSION_SHA="e72cf723a4a660438862282e8aecf3885fc8123e88bfcad534cf6b941a354b75" \
+    GITHUB_CLI_VERSION="2.103.3" \
+    GITHUB_COPILOT_CLI_VERSION="1.0.105"
 
+# Keep Ubuntu packages unpinned so builds receive current security updates.
+# hadolint ignore=DL3008
 RUN echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
   && locale-gen en_GB.utf8 \
   && update-locale LANG=en_GB.UTF-8 \
-  && apt-get update && apt-get install -y && apt-get upgrade -y\
+  && apt-get update && apt-get upgrade -y && apt-get install -y \
   curl \
   nano \
   python3 \
@@ -60,6 +62,19 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 10 &&\
   command -v pip
   
 ARG TARGETARCH
+# Patch GHSA-mrhx-c7xc-m3w5 until the RStudio base image bundles a fixed Zod.
+RUN curl --location --fail-with-body \
+      "https://registry.npmjs.org/zod/-/zod-4.6.6.tgz" \
+      --output /tmp/zod.tgz \
+    && printf '%s\n' "e149b34141797f1bdf7181e56e30667a353ec3e85b0e7585c78692f24071ee73c11dc3b64aa3dba401bcb276dd83e5ec7b8a5179f47df2182316020c088fd484  /tmp/zod.tgz" > /tmp/zod.sha512 \
+    && sha512sum --check --strict /tmp/zod.sha512 \
+    && test -f /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod/package.json \
+    && python3 -m tarfile --extract /tmp/zod.tgz /tmp/zod --filter data \
+    && rm -rf /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
+    && mv /tmp/zod/package /usr/lib/rstudio-server/bin/copilot-language-server-js/node_modules/zod \
+    && rmdir /tmp/zod \
+    && rm /tmp/zod.tgz /tmp/zod.sha512
+
 # GitHub CLI
 RUN curl --location --fail-with-body \
       "https://cli.github.com/packages/githubcli-archive-keyring.gpg" \
