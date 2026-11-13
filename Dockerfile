@@ -17,7 +17,7 @@ ENV LC_ALL="en_GB.UTF-8" \
 ENV QUARTO_VERSION="1.11.9" \
     GIT_LFS_VERSION="3.8.1" \
     GIT_LFS_VERSION_SHA="e72cf723a4a660438862282e8aecf3885fc8123e88bfcad534cf6b941a354b75" \
-    GITHUB_CLI_VERSION="2.103.3" \
+    GITHUB_CLI_VERSION="2.103.4" \
     GITHUB_COPILOT_CLI_VERSION="1.0.105"
 
 # Keep Ubuntu packages unpinned so builds receive current security updates.
